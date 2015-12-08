@@ -10,7 +10,7 @@ var express = require('express')
   ,login=require("./routes/login")
   ,view_contracts=require("./routes/view_contracts")
   ,reserve=require("./routes/reserveParking")
-  ,getParkingSpaces=require('./routes/getParkingSpaces');;
+  ,getParkingSpaces=require('./routes/getParkingSpaces');
 
 var app = express();
 
