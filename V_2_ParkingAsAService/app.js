@@ -9,7 +9,8 @@ var express = require('express')
   , mongo = require("./routes/mongo")
   ,login=require("./routes/login")
   ,view_contracts=require("./routes/view_contracts")
-  ,reserve=require("./routes/reserveParking");
+  ,reserve=require("./routes/reserveParking")
+  ,getParkingSpaces=require('./routes/getParkingSpaces');;
 
 var app = express();
 
@@ -57,6 +58,7 @@ app.post('/login',login.after_owner_login);
 app.get('/adminLogin',login.before_admin_login);
 app.post('/adminLogin',login.after_admin_login);
 app.get('/searchParking',reserve.searchParking);
+app.get('/getParkingSpaces',getParkingSpaces.getParkingSpaces);
 //app.post('/addParkingSpace',login.after_admin_login);
 
 mongo.connect(mongoSessionConnectURL, function() {
