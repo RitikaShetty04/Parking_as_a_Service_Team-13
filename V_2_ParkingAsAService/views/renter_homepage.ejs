@@ -34,25 +34,24 @@
 		var searchBox;
 		var map;
 		var marker;
-		
-		$scope.createMap = function(Latitude,Longitude)
-		{
-			var mapProp = {
-					// var position=getLocation();
+		$scope.clickedSpace;
 
-					center : new google.maps.LatLng(Latitude,Longitude),
-					zoom : 10,
-					mapTypeId : google.maps.MapTypeId.ROADMAP
-				};
-				
-	/* if(typeof position.title=="undefined")
-		{ */
-			map = new google.maps.Map(document.getElementById("googleMap"),mapProp);
-			
+		$scope.createMap = function(Latitude, Longitude) {
+			var mapProp = {
+				// var position=getLocation();
+
+				center : new google.maps.LatLng(Latitude, Longitude),
+				zoom : 10,
+				mapTypeId : google.maps.MapTypeId.ROADMAP
+			};
+
+			/* if(typeof position.title=="undefined")
+				{ */
+			map = new google.maps.Map(document.getElementById("googleMap"),
+					mapProp);
+
 		}
-		
-		
-		
+
 		$scope.getParkingSpaces = function() {
 
 			$http({
@@ -63,7 +62,7 @@
 				}
 			}).success(function(data) {
 				//	window.alert("In Success");
-				console.log("data" + data.result[0].lattitude);
+				//console.log("data" + data.result[0].lattitude);
 				$scope.result = data.result;
 				//return $scope.result;
 			}).error(function(error) {
@@ -88,22 +87,19 @@
 			// "<br>Longitude: " + position.coords.longitude;
 			console.log("");
 			//marker=null;
-			$scope.filtered=[];
-			if(typeof position.title == "undefined")
-			{
+			$scope.filtered = [];
+			if (typeof position.title == "undefined") {
 				$scope.Latitude = position.coords.latitude;
-			$scope.Longitude = position.coords.longitude;
-			console.log("lattitude" + $scope.Latitude + "longitude"
-					+ $scope.Longitude+" "+position);
-			}else
-				{
+				$scope.Longitude = position.coords.longitude;
+				console.log("lattitude" + $scope.Latitude + "longitude"
+						+ $scope.Longitude + " " + position);
+			} else {
 				$scope.Latitude = position.lat;
 				$scope.Longitude = position.lng;
-				}
-			if(typeof position.title == "undefined" )
-				{
-			$scope.createMap($scope.Latitude,$scope.Longitude);
-				}
+			}
+			if (typeof position.title == "undefined") {
+				$scope.createMap($scope.Latitude, $scope.Longitude);
+			}
 			// $scope.getParkingSpaces();
 			$scope.location = {
 				lat : $scope.Latitude,
@@ -111,7 +107,7 @@
 				title : 'San Jose'
 			};
 			var result1 = $scope.result;
-			console.log("result" + result1[0].lattitude);
+			//console.log("result" + result1[0].lattitude);
 
 			$scope.points = result1;
 
@@ -128,28 +124,28 @@
 				});
 				console.log("distance" + $scope.point.address + " " + dist.km);
 				if (dist.km < 16.0934) {
-					console.log("comparison"+dist.km);
+					console.log("comparison" + dist.km);
 					$scope.point.distance = dist.km;
 					$scope.filtered.push($scope.point);
 				}
 			}
 			console.log("filtered" + JSON.stringify($scope.filtered[0]));
 
-			
-	/* } */
+			/* } */
 			/* if(typeof position.title=="undefined")
 				{ */
 			marker = new google.maps.Marker({
 				position : new google.maps.LatLng($scope.Latitude,
 						$scope.Longitude),
 			});
-		
+
 			marker.setMap(map);
-				
-					//.setMap(null);
-	
+
+			//.setMap(null);
+
 			for (var i = 0; i < $scope.filtered.length; i++) {
-				console.log("inside"+" "+$scope.filtered[i].title+" "+$scope.filtered[i].lattitude);
+				console.log("inside" + " " + $scope.filtered[i].title + " "
+						+ $scope.filtered[i].lattitude);
 				marker = new google.maps.Marker({
 					position : new google.maps.LatLng(
 							$scope.filtered[i].lattitude,
@@ -159,14 +155,14 @@
 				marker.setMap(map);
 				$scope.markerClick(marker, $scope.filtered[i]);
 			}
-	console.log("before");
+			console.log("before");
 			// Create the search box and link it to the UI element.
-			
+
 			input = document.getElementById('pac-input');
 			console.log("between1");
 			searchBox = new google.maps.places.SearchBox(input);
 			console.log("between2");
-				
+
 			map.controls[google.maps.ControlPosition.TOP_LEFT].push(input);
 			console.log("between");
 			// Bias the SearchBox results towards current map's viewport.
@@ -174,8 +170,7 @@
 				searchBox.setBounds(map.getBounds());
 			});
 			console.log("after");
-			$scope.searchBoxListen(searchBox,map);
-				
+			$scope.searchBoxListen(searchBox, map);
 
 		}
 
@@ -185,13 +180,14 @@
 				$scope.value = filtered.address;
 				//console.log("title inside" + $scope.value);
 				document.getElementById("space").innerHTML = filtered.address;
+				$scope.clickedSpace = filtered;
 			});
 			//console.log("title outside" + $scope.value);
 
 		}
-		
-		$scope.searchBoxListen=function(searchBox,map){
-			
+
+		$scope.searchBoxListen = function(searchBox, map) {
+
 			// Listen for the event fired when the user selects a prediction and retrieve
 			// more details for that place.
 			searchBox.addListener('places_changed', function() {
@@ -200,57 +196,77 @@
 				if (places.length == 0) {
 					return;
 				}
-		var position={};
-				places.forEach(function(place)
-						{
-					position.title=place.name;
-					position.lat=place.geometry.location.lat();
-					position.lng=place.geometry.location.lng();
-						}
-				);
-				console.log("markers without clearing"+markers[0].position);
+				var position = {};
+				places.forEach(function(place) {
+					position.title = place.name;
+					position.lat = place.geometry.location.lat();
+					position.lng = place.geometry.location.lng();
+				});
+				console.log("markers without clearing" + markers[0].position);
 				// Clear out the old markers.
 				//marker.setMap(null);
-				 markers.forEach(function(marker) {
+				markers.forEach(function(marker) {
 					marker.setMap(null);
 				});
-				markers = []; 
-				
+				markers = [];
+
 				// For each place, get the icon, name and location.
-			    var bounds = new google.maps.LatLngBounds();
-			    places.forEach(function(place) {
-			      var icon = {
-			        url: place.icon,
-			        size: new google.maps.Size(71, 71),
-			        origin: new google.maps.Point(0, 0),
-			        anchor: new google.maps.Point(17, 34),
-			        scaledSize: new google.maps.Size(25, 25)
-			      }; 
-			      
-			   // Create a marker for each place.
-			       markers.push(new google.maps.Marker({
-			        map: map,
-			        icon: icon,
-			        title: place.name,
-			        position: place.geometry.location
-			      })); 
-			      //$scope.getParkingSpaces();
-			   console.log("markers"+position.title+" "+position+" "+markers[0]);
-			     
-			   
-			      if (place.geometry.viewport) {
-			          // Only geocodes have viewport.
-			          bounds.union(place.geometry.viewport);
-			        } else {
-			          bounds.extend(place.geometry.location);
-			        }
-			      });
-			      map.fitBounds(bounds); 
-			      $scope.showPosition(position);
+				var bounds = new google.maps.LatLngBounds();
+				places.forEach(function(place) {
+					var icon = {
+						url : place.icon,
+						size : new google.maps.Size(71, 71),
+						origin : new google.maps.Point(0, 0),
+						anchor : new google.maps.Point(17, 34),
+						scaledSize : new google.maps.Size(25, 25)
+					};
+
+					// Create a marker for each place.
+					markers.push(new google.maps.Marker({
+						map : map,
+						icon : icon,
+						title : place.name,
+						position : place.geometry.location
+					}));
+					//$scope.getParkingSpaces();
+					console.log("markers" + position.title + " " + position
+							+ " " + markers[0]);
+
+					if (place.geometry.viewport) {
+						// Only geocodes have viewport.
+						bounds.union(place.geometry.viewport);
+					} else {
+						bounds.extend(place.geometry.location);
+					}
+				});
+				map.fitBounds(bounds);
+				$scope.showPosition(position);
 			});
 		}
 
 		google.maps.event.addDomListener(window, 'load', $scope.getLocation);
+
+		$scope.goToReserve=function()
+		{
+			
+		console.log("in gotoreserve");
+			$http({
+				method : "get",
+				url : '/goToReserve',
+				data : {
+					'data' : $scope.clickedSpace
+				}
+			}).success(function(response)
+			{
+				$scope.goToReserveConfirm();
+			});
+		}
+		
+		$scope.goToReserveConfirm=function()
+		{
+		window.location='/goToReserveConfirm';
+		}
+
 	});
 </script>
 <!--  <script src="../js/searchbox.js"></script>-->
@@ -318,7 +334,8 @@
 					<!--<div ng-include="templateView.template"></div>-->
 				</div>
 				<div class="col-md-2">
-					<a id="space"></a>
+					<a id="space" ng-model="clickedSpace"
+						ng-click="goToReserve()"></a>
 				</div>
 			</div>
 
