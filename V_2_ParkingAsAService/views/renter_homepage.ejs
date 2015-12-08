@@ -1,8 +1,7 @@
-<html>
+<html ng-app="app" ng-controller="ParkingSpaceController">
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<script src= "http://ajax.googleapis.com/ajax/libs/angularjs/1.3.14/angular.min.js"></script>
 <script type="text/javascript"
 	src="http://cdnjs.cloudflare.com/ajax/libs/jquery/2.0.3/jquery.min.js"></script>
 <link rel="stylesheet"
@@ -14,107 +13,334 @@
 	rel="stylesheet" type="text/css">
 <link rel='stylesheet' href='/stylesheets/home.css' />
 <script
+	src="http://ajax.googleapis.com/ajax/libs/angularjs/1.3.14/angular.min.js"></script>
+<script type="text/javascript" src="../js/dist.js"></script>
+<!-- <script
 	src="https://maps.googleapis.com/maps/api/js?key=AIzaSyA-oZe92CCa_iLFuh9G38u9O3PQixXZk5I&libraries=places"
-	async defer></script>
-<script src="/angular-google-maps/dist/angular-google-maps.js"></script>
-<script src="../js/searchbox.js"></script>
-</head>
-<body>
-	
-		<div class="section text-center head">
-			<!-- <div class="container"> -->
-				<div class="row">
-					<div class="col-md-3"></div>
-					<div class="col-md-6" style="font-size: 90%;letter-spacing: 2px;">Parking as a Service</div>
-					<div class="col-md-1"></div>
-					<div class="col-md-2">
-						<div class="btn-group btn-group-lg" style="letter-spacing: 1px;">
-							<a class="btn btn-link dropdown-toggle" data-toggle="dropdown">
-								<span class="badge"> <i
-									class="fa fa-border fa-user fa-fw fa-lg glyphi"> </i></span> 
-									<%=user.loggedInUserFname%>
-									 <span
-								class="fa fa-caret-down"> </span> </i>
-							</a>
-							
-
-							<ul class="dropdown-menu" role="menu">
-								<li class="hidden-xs mylist"><img alt="no Img"
-									src="/images/profile.jpeg" height="50px" width="50px"
-									style="padding: 10px;"></li>
-								<li class="hidden-xs mylist"><a href="#"
-									style="color: gray;">Profile</a></li>
-								<li class="hidden-xs mylist"><a href="#"
-									style="color: gray;">Search for a parking space</a></li>
-								<li class="hidden-xs mylist"><a href="#"
-									style="color: gray;">View all contracts</a></li>
-								<li class="mylist"><a href="#" style="color: gray;">Logout</a>
-								</li>
-							</ul>
-						</div>
-						<br>
-					</div>
-				<!-- </div> -->
-			</div>
-		</div>
-		<div class="btn-group-vertical vertinav" style="min-height: 100%;">
-			<div class="container clear-top"
-				style="overflow: auto; padding-bottom: 150px;">
-				<div class="row" ng-app="myApp" ng-controller="ReserveController">
-					<div class="col-md-2">
-						<ul class="lead nav nav-pills nav-stacked">
-							<li class="hidden-xs"><img alt="no Img"
-								src="/images/profile.jpeg" height="130px" width="130px"
-								style="border-radius: 70px;"></li>
-							<li class="hidden-xs mylist"><a href="#"
-								style="color: gray;">Profile</a></li>
-							<li class="hidden-xs mylist">
-							<a href="" ng-click="searchParking()" style="color: gray;">Search for a parking space</a></li>
-							<li class="hidden-xs mylist"><a href="#"
-								style="color: gray;">View all contracts</a></li>
-							<li class="mylist"><a href="#" style="color: gray;">Logout</a>
-							</li>
-						</ul>
-					</div>
-					<div class="col-md-8 container-fluid mycontainer">
-					<!-- wite code here -->
-						<!--<div ng-include="templateView.template"></div>-->
-						
-					</div>
-				</div>
-
-			</div>
-		</div>
-		<footer class="foot">
-			<div>
-				<div class="col-md-3" style="padding: 0px;">
-					<div class="col-md-2 glyphi">
-						<a><i class="fa fa-border fa-fw fa-lg fa-twitter glyphi"></i></a>
-					</div>
-					<div class="col-md-2 glyphi">
-						<a><i class="fa fa-border fa-facebook fa-fw fa-lg glyphi"></i></a>
-					</div>
-					<div class="col-md-2 glyphi">
-						<a><i class="fa fa-border fa-fw fa-lg fa-linkedin glyphi"></i></a>
-					</div>
-				</div>
-			</div>
-		</footer>
-	
+	async defer></script>-->
+<!--  <script src="/angular-google-maps/dist/angular-google-maps.js"></script>-->
+<script src="http://maps.googleapis.com/maps/api/js?libraries=places"></script>
 <script type="text/javascript">
-      var app = angular.module('myApp', []);
-      app.controller('ReserveController', function($scope,$http,$window,$location)
-    		  {
-    	  console.log("Inside Reserve controller");
-    	  
-    	  $scope.searchParking = function() {
-    		  console.log("Inside seach func");
-  			$window.location="/searchParking";
-  			};
-     	  
-    			}); 
-    </script>
-    
+	var app = angular.module('app', []);
+	app.controller('ParkingSpaceController', function($scope, $http) {
+		//$scope.locationresult;
+		$scope.result;
+		$scope.value;
+		$scope.filtered = [];
+		$scope.value1;
+		var markers = [];
+		var input;
+		var map;
+		var searchBox;
+		var map;
+		var marker;
+		
+		$scope.createMap = function(Latitude,Longitude)
+		{
+			var mapProp = {
+					// var position=getLocation();
+
+					center : new google.maps.LatLng(Latitude,Longitude),
+					zoom : 10,
+					mapTypeId : google.maps.MapTypeId.ROADMAP
+				};
+				
+	/* if(typeof position.title=="undefined")
+		{ */
+			map = new google.maps.Map(document.getElementById("googleMap"),mapProp);
+			
+		}
+		
+		
+		
+		$scope.getParkingSpaces = function() {
+
+			$http({
+				method : 'GET',
+				url : '/getParkingSpaces',
+				data : {
+					"data" : ''
+				}
+			}).success(function(data) {
+				//	window.alert("In Success");
+				console.log("data" + data.result[0].lattitude);
+				$scope.result = data.result;
+				//return $scope.result;
+			}).error(function(error) {
+				alert("error");
+			});
+		};
+
+		$scope.getLocation = function() {
+			console.log("in geolocation");
+			if (navigator.geolocation) {
+				console.log("in navigatopr.geolocation");
+				return navigator.geolocation
+						.getCurrentPosition($scope.showPosition);
+
+				//    return position;
+			} else {
+				// x.innerHTML = "Geolocation is not supported by this browser.";
+			}
+		}
+		$scope.showPosition = function(position) {
+			//  x.innerHTML = "Latitude: " + position.coords.latitude + 
+			// "<br>Longitude: " + position.coords.longitude;
+			console.log("");
+			//marker=null;
+			$scope.filtered=[];
+			if(typeof position.title == "undefined")
+			{
+				$scope.Latitude = position.coords.latitude;
+			$scope.Longitude = position.coords.longitude;
+			console.log("lattitude" + $scope.Latitude + "longitude"
+					+ $scope.Longitude+" "+position);
+			}else
+				{
+				$scope.Latitude = position.lat;
+				$scope.Longitude = position.lng;
+				}
+			if(typeof position.title == "undefined" )
+				{
+			$scope.createMap($scope.Latitude,$scope.Longitude);
+				}
+			// $scope.getParkingSpaces();
+			$scope.location = {
+				lat : $scope.Latitude,
+				lon : $scope.Longitude,
+				title : 'San Jose'
+			};
+			var result1 = $scope.result;
+			console.log("result" + result1[0].lattitude);
+
+			$scope.points = result1;
+
+			intPoint = 0, intPoints = $scope.points.length, dist = {},
+					$scope.point = {};
+			for (intPoint = 0; intPoint < intPoints; intPoint = intPoint + 1) {
+				$scope.point = $scope.points[intPoint];
+				console.log("point" + $scope.point.lat);
+				dist = distance({
+					lat1 : $scope.location.lat,
+					lon1 : $scope.location.lon,
+					lat2 : $scope.point.lattitude,
+					lon2 : $scope.point.longitude
+				});
+				console.log("distance" + $scope.point.address + " " + dist.km);
+				if (dist.km < 16.0934) {
+					console.log("comparison"+dist.km);
+					$scope.point.distance = dist.km;
+					$scope.filtered.push($scope.point);
+				}
+			}
+			console.log("filtered" + JSON.stringify($scope.filtered[0]));
+
+			
+	/* } */
+			/* if(typeof position.title=="undefined")
+				{ */
+			marker = new google.maps.Marker({
+				position : new google.maps.LatLng($scope.Latitude,
+						$scope.Longitude),
+			});
+		
+			marker.setMap(map);
+				
+					//.setMap(null);
+	
+			for (var i = 0; i < $scope.filtered.length; i++) {
+				console.log("inside"+" "+$scope.filtered[i].title+" "+$scope.filtered[i].lattitude);
+				marker = new google.maps.Marker({
+					position : new google.maps.LatLng(
+							$scope.filtered[i].lattitude,
+							$scope.filtered[i].longitude),
+				});
+				markers.push(marker);
+				marker.setMap(map);
+				$scope.markerClick(marker, $scope.filtered[i]);
+			}
+	console.log("before");
+			// Create the search box and link it to the UI element.
+			
+			input = document.getElementById('pac-input');
+			console.log("between1");
+			searchBox = new google.maps.places.SearchBox(input);
+			console.log("between2");
+				
+			map.controls[google.maps.ControlPosition.TOP_LEFT].push(input);
+			console.log("between");
+			// Bias the SearchBox results towards current map's viewport.
+			map.addListener('bounds_changed', function() {
+				searchBox.setBounds(map.getBounds());
+			});
+			console.log("after");
+			$scope.searchBoxListen(searchBox,map);
+				
+
+		}
+
+		$scope.markerClick = function(marker, filtered) {
+			google.maps.event.addListener(marker, 'click', function() {
+				console.log("inside marker add event" + filtered.address);
+				$scope.value = filtered.address;
+				//console.log("title inside" + $scope.value);
+				document.getElementById("space").innerHTML = filtered.address;
+			});
+			//console.log("title outside" + $scope.value);
+
+		}
+		
+		$scope.searchBoxListen=function(searchBox,map){
+			
+			// Listen for the event fired when the user selects a prediction and retrieve
+			// more details for that place.
+			searchBox.addListener('places_changed', function() {
+				var places = searchBox.getPlaces();
+
+				if (places.length == 0) {
+					return;
+				}
+		var position={};
+				places.forEach(function(place)
+						{
+					position.title=place.name;
+					position.lat=place.geometry.location.lat();
+					position.lng=place.geometry.location.lng();
+						}
+				);
+				console.log("markers without clearing"+markers[0].position);
+				// Clear out the old markers.
+				//marker.setMap(null);
+				 markers.forEach(function(marker) {
+					marker.setMap(null);
+				});
+				markers = []; 
+				
+				// For each place, get the icon, name and location.
+			    var bounds = new google.maps.LatLngBounds();
+			    places.forEach(function(place) {
+			      var icon = {
+			        url: place.icon,
+			        size: new google.maps.Size(71, 71),
+			        origin: new google.maps.Point(0, 0),
+			        anchor: new google.maps.Point(17, 34),
+			        scaledSize: new google.maps.Size(25, 25)
+			      }; 
+			      
+			   // Create a marker for each place.
+			       markers.push(new google.maps.Marker({
+			        map: map,
+			        icon: icon,
+			        title: place.name,
+			        position: place.geometry.location
+			      })); 
+			      //$scope.getParkingSpaces();
+			   console.log("markers"+position.title+" "+position+" "+markers[0]);
+			     
+			   
+			      if (place.geometry.viewport) {
+			          // Only geocodes have viewport.
+			          bounds.union(place.geometry.viewport);
+			        } else {
+			          bounds.extend(place.geometry.location);
+			        }
+			      });
+			      map.fitBounds(bounds); 
+			      $scope.showPosition(position);
+			});
+		}
+
+		google.maps.event.addDomListener(window, 'load', $scope.getLocation);
+	});
+</script>
+<!--  <script src="../js/searchbox.js"></script>-->
+</head>
+<body ng-init="getParkingSpaces()">
+
+	<div class="section text-center head">
+		<!-- <div class="container"> -->
+		<div class="row">
+			<div class="col-md-3"></div>
+			<div class="col-md-6">Parking as a Service</div>
+			<div class="col-md-1"></div>
+			<div class="col-md-2">
+				<div class="btn-group btn-group-lg" style="letter-spacing: 1px;">
+					<a class="btn btn-link dropdown-toggle" data-toggle="dropdown">
+						<span class="badge"> <i
+							class="fa fa-border fa-user fa-fw fa-lg glyphi"> </i></span>
+						<%=user.loggedInUserFname%> <span class="fa fa-caret-down">
+					</span> </i>
+					</a>
+
+
+					<ul class="dropdown-menu" role="menu">
+						<li class="hidden-xs mylist"><img alt="no Img"
+							src="default_avatar.jpg" height="50px" width="50px"
+							style="padding: 10px;"></li>
+						<li class="hidden-xs mylist"><a href="#" style="color: gray;">Profile</a></li>
+						<li class="hidden-xs mylist"><a href="#" style="color: gray;">Search
+								for a parking space</a></li>
+						<li class="hidden-xs mylist"><a href="#" style="color: gray;">View
+								all contracts</a></li>
+						<li class="mylist"><a href="#" style="color: gray;">Logout</a>
+						</li>
+					</ul>
+				</div>
+				<br>
+			</div>
+			<!-- </div> -->
+		</div>
+	</div>
+	<div class="btn-group-vertical vertinav" style="min-height: 100%;">
+		<div class="container clear-top"
+			style="overflow: auto; padding-bottom: 150px;">
+			<div class="row">
+				<div class="col-md-2">
+					<ul class="lead nav nav-pills nav-stacked">
+						<li class="hidden-xs"><img alt="no Img"
+							src="default_avatar.jpg" height="130px" width="130px"
+							style="border-radius: 70px;"></li>
+						<li class="hidden-xs mylist"><a href="#" style="color: gray;">Profile</a></li>
+						<li class="hidden-xs mylist"><a href="#" style="color: gray;">Search
+								for a parking space</a></li>
+						<li class="hidden-xs mylist"><a href="#" style="color: gray;">View
+								all contracts</a></li>
+						<li class="mylist"><a href="#" style="color: gray;">Logout</a>
+						</li>
+					</ul>
+				</div>
+				<div class="col-md-8 container-fluid mycontainer">
+					<input id="pac-input" class="controls" type="text"
+						placeholder="Search Box"></input>
+					<div id="googleMap" style="width: 700px; height: 500px;"></div>
+
+					<!-- wite code here -->
+					<!--<div ng-include="templateView.template"></div>-->
+				</div>
+				<div class="col-md-2">
+					<a id="space"></a>
+				</div>
+			</div>
+
+		</div>
+	</div>
+	<footer class="foot">
+		<div>
+			<div class="col-md-3" style="padding: 0px;">
+				<div class="col-md-2 glyphi">
+					<a><i class="fa fa-border fa-fw fa-lg fa-twitter glyphi"></i></a>
+				</div>
+				<div class="col-md-2 glyphi">
+					<a><i class="fa fa-border fa-facebook fa-fw fa-lg glyphi"></i></a>
+				</div>
+				<div class="col-md-2 glyphi">
+					<a><i class="fa fa-border fa-fw fa-lg fa-linkedin glyphi"></i></a>
+				</div>
+			</div>
+		</div>
+	</footer>
+
+
 </body>
 
 </html>
