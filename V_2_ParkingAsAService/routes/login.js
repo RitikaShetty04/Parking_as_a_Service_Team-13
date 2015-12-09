@@ -36,7 +36,7 @@ function after_renter_login(req,res) {
 				console.log(req.session.id +" is the ID of the user");
 				req.session.loggedInUserId = user.renterId;
 				req.session.loggedInUserFname = user.firstName;
-				req.session.loggedInUserLname = user.lastNmae;
+				req.session.loggedInUserLname = user.lastName;
 				req.session.loggedInUserName = user.username;
 //address
 				req.session.loggedInAddress = user.address;
@@ -74,11 +74,12 @@ function after_renter_login(req,res) {
 		});
 	});
 }
+
 function before_owner_login(req,res) {
 	console.log("in before owner signin");
 	res.render('owner_login');
-	
 }
+
 function after_owner_login(req,res) {
 	console.log("In after login");
 	var username, password;

@@ -25,7 +25,7 @@ function after_sign_up(req,res)
 		console.log('Connected to mongo at: ' + mongoURL);
 		var coll = mongo.collection(type);
 
-		coll.findOne({user_name: email}, function(err, user){
+		coll.findOne({username: email}, function(err, user){
 
 			if (user) {
 				res.send({"signup":"User already exists"});			

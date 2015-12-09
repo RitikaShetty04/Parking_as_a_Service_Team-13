@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="stylesheet" href="http://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/css/bootstrap.min.css">
+    <script src="http://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/js/bootstrap.min.js"></script>
+  </head>
+  <body>
+    <div class="col-sm-4">
+    </div>
+   <div class="col-sm-4">
+   <center> <h2><i>Parking as a Service</i></h2><br>
+        <h3>Sign in as renter</h3><br>
+        </center>
+   <form method="post" action="/renterLogin" role="form">
+       EMAIL
+       <br><br>
+         <div class="form-group form-group-lg has-success has-feedback"> 
+             <input type="email" name="email" class="form-control" id="inputSuccess4" placeholder="Email" required>
+        <span class="glyphicon glyphicon-user form-control-feedback"></span>
+		  </div>
+		  <br><br>
+		   PASSWORD
+		   <br><br>
+		       <div class="form-group form-group-lg has-success has-feedback">
+          <input type="password" name="password" class="form-control" id="inputSuccess4" placeholder="Password" required>
+          <span class="glyphicon glyphicon-lock form-control-feedback"></span>
+        </div>
+        <br><br>
+        <button class="btn btn-primary btn-block btn-lg" type="submit" value="Login"/ >Login       
+       </form> 	
+       </div>
+  </body>
+</html>

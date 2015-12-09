@@ -4,5 +4,5 @@
  */
 
 exports.index = function(req, res){
-  res.render('index', { message: 'All contracts',rows:'' });
+  res.render('index', { message: '',rows:'' });
 };

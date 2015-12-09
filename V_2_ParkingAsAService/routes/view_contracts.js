@@ -2,30 +2,34 @@
  * New node file
  */
 var mongo = require("./mongo");
-var mongoURL = "mongodb://localhost:27017/parkingAsAService";
+var mongoURL = "mongodb://localhost:27017/ParkingAsAService";
+
+var checkLoggedInUser = require("./checkLoggedInUser.js");
+
 exports.view_contracts = function(req, res) {
-	var user_name = "ritikashetty@gmail.com";
+	if (checkLoggedInUser.checkLoggedInUser(req, res) === true) {
+	var user_name = req.session.loggedInUserName;
 	//get username from sessions
 	mongo.connect(mongoURL, function(){
 		console.log('Connected to mongo at: ' + mongoURL);
-		var coll = mongo.collection('Parking_Contract');
+		var coll = mongo.collection('parkingContract');
 
-		coll.find({renter_username: user_name}).toArray(function(err, user){
+		coll.find({owner_username: user_name}).toArray(function(err, user){
 			if (user) {
 				console.log("User found");
 				var all_contracts=[];
 				all_contracts=user;
 				console.log("All: "+all_contracts.length);
 				var result="Contract Found";
-				  res.send({'result':"Contract Found",'rows':all_contracts});
+				//res.send({'result':"Contracts Found",'rows':all_contracts,'user':req.session});
+				res.render('viewAllOwnerContracts',{'result':"",'rows':all_contracts,'user':req.session});
 
 			} else {
 				console.log("User not found");
 				console.log("returned false");
-				json_responses = {"statusCode" : 401};
-				var result="Contract Not Found";
-				  res.send(result);
+				res.render('viewAllOwnerContracts',{'result':"No Contracts Found",'rows':"",'user':req.session});
 			}
 		});
 	});
+	}
 };

@@ -9,7 +9,9 @@ var express = require('express')
   , mongo = require("./routes/mongo")
   ,login=require("./routes/login")
   ,view_contracts=require("./routes/view_contracts")
-  ,reserve=require("./routes/reserveParking");
+  ,reserve=require("./routes/reserveParking")
+  ,addParkingSpace=require("./routes/addParkingSpace")
+  ,owner=require("./routes/owner");
 
 var app = express();
 
@@ -22,7 +24,7 @@ app.use(expressSession({
 	  
 	resave: false,
 	saveUninitialized: false,
-	secret: 'facebook',    
+	secret: 'ParkingAsAService',    
 	duration: 30 * 60 * 1000,    
 	activeDuration: 5 * 60 * 1000,
 	store: new mongoStore({url:mongoSessionConnectURL})
@@ -57,7 +59,15 @@ app.post('/login',login.after_owner_login);
 app.get('/adminLogin',login.before_admin_login);
 app.post('/adminLogin',login.after_admin_login);
 app.get('/searchParking',reserve.searchParking);
-//app.post('/addParkingSpace',login.after_admin_login);
+app.post('/addParkingSpace',addParkingSpace.addParkingSpace);
+
+
+app.get('/addParkingPage', addParkingSpace.addParkingPage);
+app.get('/viewMyParkingSpaces', addParkingSpace.viewMyParkingSpaces);
+app.get('/logout', addParkingSpace.logout);
+
+
+
 
 mongo.connect(mongoSessionConnectURL, function() {
 	http.createServer(app).listen(app.get('port'), function() {

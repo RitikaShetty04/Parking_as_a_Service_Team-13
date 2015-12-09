@@ -1,0 +1,126 @@
+
+<html>
+<head>
+<link rel='stylesheet' href='/stylesheets/style.css' />
+<script src="http://ajax.googleapis.com/ajax/libs/angularjs/1.2.26/angular.min.js"></script>
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/1.8.3/jquery.min.js"></script>
+<script src="http://code.jquery.com/ui/1.9.2/jquery-ui.js"></script>
+<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/css/bootstrap.min.css">
+<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/css/bootstrap-theme.min.css">
+<meta http-equiv="Cache-Control" content="no-cache, no-store, must-revalidate" />
+<meta http-equiv="Pragma" content="no-cache" />
+<meta http-equiv="Expires" content="0" />
+<meta name="description" content="Simple Map">
+<meta name="keywords" content="ng-map,AngularJS,center">
+<meta name="viewport" content="initial-scale=1.0, user-scalable=no" />
+<script src="https://maps.googleapis.com/maps/api/js"></script> 
+
+<title>Welcome</title>
+
+</head>
+<body>
+<h4>Welcome to the Portal</h4>
+<div id="map" style="width:500px;height:380px;">
+</div>
+	
+	<div class="row" >
+		<div class="col-md-6">
+			
+	
+
+			
+		</div>
+	</div>
+	</script> 
+<script type="text/javascript">
+  var delay = 100;
+  var infowindow = new google.maps.InfoWindow();
+  var latlng = new google.maps.LatLng(21.0000, 78.0000);
+  var mapOptions = {
+    zoom: 5,
+    center: latlng,
+    mapTypeId: google.maps.MapTypeId.ROADMAP
+  }
+  var geocoder = new google.maps.Geocoder(); 
+  var map = new google.maps.Map(document.getElementById("map"), mapOptions);
+  var bounds = new google.maps.LatLngBounds();
+//(2)
+  function geocodeAddress(address, next) {
+    geocoder.geocode({address:address}, function (results,status)
+      { 
+         if (status == google.maps.GeocoderStatus.OK) {
+          var p = results[0].geometry.location;
+          var lat=p.lat();
+          var lng=p.lng();
+          createMarker(address,lat,lng);
+        }
+        else {
+           if (status == google.maps.GeocoderStatus.OVER_QUERY_LIMIT) {
+            nextAddress--;
+            delay++;
+          } else {
+                        }   
+        }
+         //(3)
+        next();
+      }
+    );
+  }
+  //creates marker with location name string
+ function createMarker(add,lat,lng) {
+   var contentString = add;
+   var marker = new google.maps.Marker({
+     position: new google.maps.LatLng(lat,lng),
+     map: map,
+     icon: "/car_icon.png"
+           });
+//shows info on clicking on the marker
+  google.maps.event.addListener(marker, 'click', function() {
+     //infowindow.setContent(contentString); 
+     infowindow.open(map,marker);
+   });
+
+   bounds.extend(marker.position);
+
+ }
+  var locations = [
+          'New Delhi, India',
+           'Mumbai, India',
+           'Bangaluru, Karnataka, India',
+           'Hyderabad, Ahemdabad, India',
+           'Gurgaon, Haryana, India',
+           'Cannaught Place, New Delhi, India',
+           'Bandra, Mumbai, India',
+           'Nainital, Uttranchal, India',
+           'Guwahati, India',
+           'West Bengal, India',
+           'Jammu, India',
+           'Kanyakumari, India',
+           'Kerala, India',
+           'Himachal Pradesh, India',
+           'Shillong, India',
+           'Chandigarh, India',
+           'Dwarka, New Delhi, India',
+           'Pune, India',
+           'Indore, India',
+           'Orissa, India',
+           'Shimla, India',
+           'Gujarat, India' 
+  ];
+  
+  //(1) iterates through locations
+  var nextAddress = 0;
+  function theNext() {
+    if (nextAddress < locations.length) {
+    	//calls function geocodeAddress again and again after time 'delay'
+      setTimeout('geocodeAddress("'+locations[nextAddress]+'",theNext)', delay);
+      nextAddress++;
+    } else {
+      map.fitBounds(bounds);
+    }
+  }
+  theNext();
+  
+</script>
+</body>
+</html>

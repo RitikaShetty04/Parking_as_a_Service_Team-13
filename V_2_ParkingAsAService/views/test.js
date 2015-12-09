@@ -1,109 +1,142 @@
 var app = angular.module('myApp', []);
-      app.controller('Controller', function($scope,$http,$window)
-    		  {
-    	  var currdate,time,hrs,mins,timestringlength;
-    	  $scope.currdate=new Date();
-    	  
-    	  var year,month,day,dateFormat;
-    	  $scope.year = $scope.currdate.getFullYear()+"";
-    	  $scope.month = ($scope.currdate.getMonth()+1)+"";
-    	  $scope.day = $scope.currdate.getDate()+"";
-    	  $scope.dateFormat = $scope.year + "-" + $scope.month + "-" + $scope.day; 
-    	  
-    	  $scope.time=$scope.currdate.getTime();
-    	  $scope.hrs=$scope.currdate.getHours();
-    	  $scope.mins=$scope.currdate.getMinutes();
-    	
-    	  var drop1;
-    	  $scope.drop1=[];
-    	  var drop2;
-    	  $scope.drop2=[];
-    	  var hours;
-    	  $scope.hours=parseInt($scope.hrs); 
-    	  for(var i=$scope.hours;i<24;i++)
-    		  {
-    	   if($scope.mins<30)
-    		  {
-    		  $scope.drop1.push($scope.hours+":30");
-    		  $scope.hours=$scope.hours+1;
-    		  $scope.drop1.push($scope.hours +":00");
-    		  } 
-    	   else
-    		   {
-    		   $scope.drop1.push($scope.hours+1 +":00");
-    		   if($scope.hours+1!=24)
-    			   {
-    		   $scope.drop1.push($scope.hours+1 +":30");
-    			   }
-    		   $scope.hours=$scope.hours+1;
-    		   }
-    		  } 
-    	  $scope.GetValue = function() {
-    		  console.log("in getValue"+$scope.timings);
-    		  $scope.checkintime = $scope.timings;
-    		  $scope.timestringlength=parseInt($scope.checkintime.length);
-    		  $scope.minposition=parseInt($scope.checkintime.indexOf(":"));
-    		  $scope.minutestring=$scope.checkintime.substring($scope.minposition+1,$scope.timestringlength);
-    		  $scope.hourstring=$scope.checkintime.substring(0,$scope.minposition);
-    		  $scope.hour=parseInt($scope.hourstring);
-    		  $scope.drop2.length=0;
-    		  for(var i=$scope.hour;i<24;i++)
-    			  {
-    		  if($scope.minutestring=="30")
-    			  {
-    			  
-    			  $scope.hour=$scope.hour+1;
-    			  $scope.hourstring=$scope.hour+":00";
-    			  $scope.drop2.push($scope.hourstring);
-    			  if($scope.hour!="24")
-				  {
-    			  $scope.hourstring=$scope.hour+":30";
-    			  $scope.drop2.push($scope.hourstring);
-				  }
-    			  }
-    		  else
-    			  {
-    			  $scope.hourstring=$scope.hour+":30";
-    			  $scope.drop2.push($scope.hourstring);
-    			  if($scope.hour!="24")
-				  {
-    				  $scope.hour=$scope.hour+1;
-    				  $scope.hourstring=$scope.hour+":00";
-    				  $scope.drop2.push($scope.hourstring);
-    				  }
-    			  }
-    			  }
-    	  }
-    	  
-    	  $scope.confirmReservation = function() {
-    		  
-    		  if (confirm("Are you sure you want to proceed with the reservation?"))
-              {
-        		  $scope.checkouttime = $scope.checkout;
-        		  $scope.timestringlength=parseInt($scope.checkouttime.length);
-        		  $scope.minposition=parseInt($scope.checkouttime.indexOf(":"));
-        		  $scope.minutestringcheckout=$scope.checkouttime.substring($scope.minposition+1,$scope.timestringlength);
-        		  $scope.hourstringcheckout=$scope.checkouttime.substring(0,$scope.minposition);
-        		  $scope.duration=parseInt($scope.checkouttime)-parseInt($scope.checkintime);
-        		  $scope.durationstring=$scope.duration+"";
-        		  if(($scope.minutestring=="30" && $scope.minutestringcheckout=="00"))
-        			  {
-        			  $scope.duration=parseInt($scope.checkouttime)-parseInt($scope.checkintime);
-        			  $scope.durationstring=$scope.duration-1;
-        			  $scope.durationstring=$scope.durationstring+".5";
-        			  }
-        		  else if(($scope.minutestring=="00" && $scope.minutestringcheckout=="30"))
-        			  {
-        			  $scope.duration=parseInt($scope.checkouttime)-parseInt($scope.checkintime);
-        			  $scope.durationstring=$scope.durationstring+".5";
-        			  }
-    			  
-              }
-    		  else
-    			  {
-    			  
-    			  }
-    		  
-    	  }
-    	  
-    			});
+app.controller('Controller', function($scope,$http,$location,$window)
+		  {
+	  var latti="hellooutside";
+	  $scope.added="false";
+	  $scope.initAutocomplete = function()
+	  {
+		
+		  
+  var map = new google.maps.Map(document.getElementById('map'), {
+    center: {lat: 37.3343640999999, lng:-121.9103711000000},
+    zoom: 10,
+    mapTypeId: google.maps.MapTypeId.ROADMAP
+  });
+  
+  // Create the search box and link it to the UI element.
+  $scope.input = document.getElementById('pac-input');
+  
+  var searchBox = new google.maps.places.SearchBox(document.getElementById('pac-input'));
+ 
+ 
+  map.controls[google.maps.ControlPosition.TOP_LEFT].push(document.getElementById('pac-input'));
+
+  // Bias the SearchBox results towards current map's viewport.
+  map.addListener('bounds_changed', function() {
+    searchBox.setBounds(map.getBounds());
+  });
+
+  var markers = [];
+  // [START region_getplaces]
+  // Listen for the event fired when the user selects a prediction and retrieve
+  // more details for that place.
+  $scope.lattitude;
+  $scope.longitude;
+  $scope.lat="hello";
+  
+  searchBox.addListener('places_changed', function() {
+    var places = searchBox.getPlaces();
+
+    if (places.length == 0) {
+      return;
+    }
+
+    // Clear out the old markers.
+    markers.forEach(function(marker) {
+      marker.setMap(null);
+    });
+    markers = [];
+
+    // For each place, get the icon, name and location.
+    var bounds = new google.maps.LatLngBounds();
+    places.forEach(function(place) {
+      var icon = {
+        url: place.icon,
+        size: new google.maps.Size(71, 71),
+        origin: new google.maps.Point(0, 0),
+        anchor: new google.maps.Point(17, 34),
+        scaledSize: new google.maps.Size(25, 25)
+      };
+
+      // Create a marker for each place.
+      markers.push(new google.maps.Marker({
+        map: map,
+        icon: icon,
+        title: place.name,
+        position: place.geometry.location
+      }));
+    
+      $scope.lattitude=place.geometry.location.lat();
+      $scope.longitude=place.geometry.location.lng();
+      //alert("Lattitude" + $scope.lattitude+ "Longitude" +$scope.longitude );
+
+    latti=$scope.lattitude;
+    //console.log("Value outside"+latti);
+      //alert("Lattitude" + latti);
+      if (place.geometry.viewport) {
+        // Only geocodes have viewport.
+        bounds.union(place.geometry.viewport);
+      } else {
+        bounds.extend(place.geometry.location);
+      }
+    });
+    map.fitBounds(bounds);
+  });
+  //console.log("Value outside"+latti);
+  // [END region_getplaces]
+}
+	  //lat lng
+	  	$scope.lati=0;
+		$scope.longi=0;
+		$scope.getLocation=function(){
+				
+			$scope.address=document.getElementById('pac-input').value;
+			$scope.strArray = $scope.address.split(",");
+			$scope.city=$scope.strArray[1];
+			console.log("city:" +$scope.strArray[1]);
+		 $scope.geocoder = new google.maps.Geocoder(); 
+		 $scope.geocoder.geocode({address:$scope.address}, function (results,status){ 
+	    	          $scope.p = results[0].geometry.location;
+	    	         $scope.lati=$scope.p.lat();
+	    	         $scope.longi=$scope.p.lng();    
+
+	    	         
+	    	         $http({
+						method : "POST",
+						url : '/addParkingSpace',
+						data : {
+							
+							"address":$scope.address,
+							"city":$scope.city,
+							"lattitude" : $scope.lati,
+							"longitude" : $scope.longi
+						}
+					}).success(function(data) {
+						console.log("Parking space added");
+						$scope.result = "Parking space added";
+						$scope.added="true";
+						
+					})
+		
+			});		
+			  
+		}
+	  
+		
+		$scope.addParkingPage = function() {
+			console.log("In owner controller");
+			$window.location="/addParkingPage";
+			};
+			
+			$scope.viewMyParkingSpaces = function() {
+				console.log("In viewMyParkingSpaces controller");
+				$window.location="/viewMyParkingSpaces";
+				};
+				
+				$scope.viewAllOwnerContracts = function() {
+					console.log("In viewAllOwnerContracts controller");
+					$window.location="/view_contracts";
+					};
+					
+				
+		  });
