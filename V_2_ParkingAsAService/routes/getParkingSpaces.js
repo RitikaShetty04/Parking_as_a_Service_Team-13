@@ -2,11 +2,8 @@ var mongo = require("./mongo");
 var ejs = require("ejs");
 var mongoURL = "mongodb://localhost:27017/ParkingAsAService";
 
-var checkLoggedInUser = require("./checkLoggedInUser.js");
-
 exports.getParkingSpaces=function(req,res)
 {
-	if (checkLoggedInUser.checkLoggedInUser(req, res) === true) {
 	console.log("in getparkingSpaces");
 	mongo.connect(mongoURL, function(){
 		console.log('Connected to mongo at: ' + mongoURL);
@@ -24,7 +21,7 @@ exports.getParkingSpaces=function(req,res)
 				var time=date.getTime();
 				var hrs=date.getHours();
 				var min=date.getMinutes();
-				console.log("date"+date+" time "+time+" hrs "+hrs+" min "+min+" response "+response[0]);
+				console.log("date"+date+" time "+time+" hrs "+hrs+" min "+min+" response "+response[0].availableFrom);
 				for(var i=0;i<response.length;i++)
 				{
 					var availableFrom=response[i].availableFrom.split(':');
@@ -110,22 +107,18 @@ exports.getParkingSpaces=function(req,res)
 
 				});
 	});
-}
 };
 var clickedSpace;
 exports.goToReserve=function(req,res)
 {
-	if (checkLoggedInUser.checkLoggedInUser(req, res) === true) {
 	console.log("in js");
 	clickedSpace=req.param("data");
-	
+	console.log("clickedSpace"+clickedSpace.address);
 	res.send({"response":"Success"});
-	}
 };
 
 exports.goToReserveConfirm=function(req,res)
 {
-	if (checkLoggedInUser.checkLoggedInUser(req, res) === true) {
-	res.render("reserve_button",{"clickedSpace":clickedSpace});
-	}
+	console.log("clickedSpace");
+	res.render("reserve_button",{"clickedSpace":clickedSpace,"loggedInUser":req.session});
 };

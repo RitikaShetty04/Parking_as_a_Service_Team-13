@@ -13,9 +13,11 @@ var express = require('express')
   ,addParkingSpace=require("./routes/addParkingSpace")
   ,renter=require("./routes/renter")
   ,getParkingSpaces=require('./routes/getParkingSpaces')
-  ,viewparkingspaces=require('./routes/viewparkingspaces');
+  ,viewparkingspaces=require('./routes/viewparkingspaces')
+  ,recaptcha = require('express-recaptcha');
 
 var app = express();
+recaptcha.init('6LeLchITAAAAAGNwAug22U8I8mVJUt685gPPzxI0', '6LeLchITAAAAAMyiLN16GXE8KbCTKPH10MVNIVT0');
 
 //URL for the sessions collections in mongoDB
 var mongoSessionConnectURL = "mongodb://localhost:27017/sessions";
@@ -60,7 +62,7 @@ app.get('/login', login.before_owner_login);
 app.post('/login',login.after_owner_login);
 app.get('/adminLogin',login.before_admin_login);
 app.post('/adminLogin',login.after_admin_login);
-app.get('/searchParking',reserve.searchParking);
+//app.get('/searchParking',reserve.searchParking);
 
 app.post('/addParkingSpace',addParkingSpace.addParkingSpace);
 
@@ -81,8 +83,10 @@ app.post('/listParkingOfOwner',viewparkingspaces.listParkingOfOwner);
 app.post('/changeAvailableTime',viewparkingspaces.changeAvailableTime);
 app.post('/changeStatus',viewparkingspaces.changeStatus);
 app.get('/getParkingSpaces',getParkingSpaces.getParkingSpaces);
-app.get('/goToReserve',getParkingSpaces.goToReserve);
+app.post('/goToReserve',getParkingSpaces.goToReserve);
 app.get('/goToReserveConfirm',getParkingSpaces.goToReserveConfirm);
+app.get('/goToBill',reserve.goToBill);
+app.post('/sendBillDetail',reserve.sendBillDetail);
 
 
 mongo.connect(mongoSessionConnectURL, function() {

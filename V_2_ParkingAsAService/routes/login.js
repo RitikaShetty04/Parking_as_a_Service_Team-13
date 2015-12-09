@@ -36,7 +36,7 @@ function after_renter_login(req,res) {
 				console.log(req.session.id +" is the ID of the user");
 				req.session.loggedInUserId = user.renterId;
 				req.session.loggedInUserFname = user.firstName;
-				req.session.loggedInUserLname = user.lastName;
+				req.session.loggedInUserLname = user.lastNmae;
 				req.session.loggedInUserName = user.username;
 //address
 				req.session.loggedInAddress = user.address;
@@ -47,6 +47,8 @@ function after_renter_login(req,res) {
 				req.session.loggedInPhone = user.phoneNo;
 //Card details
 				req.session.loggedInCreditCardNumber = user.creditCardNumber;
+				req.session.loggedInCreditCardNumberHidden="************"+user.creditCardNumber.substring(12);
+				console.log("loggedincreditcardhidden"+req.session.loggedInCreditCardNumberHidden);
 				req.session.loggedInNameOnCard = user.nameOnCard;
 				req.session.loggedInExpiry = user.expiry;
 				req.session.loggedInSecurityCode  = user.securityCode ;
@@ -74,12 +76,11 @@ function after_renter_login(req,res) {
 		});
 	});
 }
-
 function before_owner_login(req,res) {
 	console.log("in before owner signin");
 	res.render('owner_login');
+	
 }
-
 function after_owner_login(req,res) {
 	console.log("In after login");
 	var username, password;
@@ -116,6 +117,8 @@ function after_owner_login(req,res) {
 				req.session.loggedInPhone = user.phoneNo;
 //Card details
 				req.session.loggedInCreditCardNumber = user.creditCardNumber;
+				
+				
 				req.session.loggedInNameOnCard = user.nameOnCard;
 				req.session.loggedInExpiry = user.expiry;
 				req.session.loggedInSecurityCode  = user.securityCode ;
