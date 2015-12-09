@@ -158,16 +158,22 @@ html, body {
 					<div class="col-md-8 container-fluid mycontainer">
 					<!-- wite code here -->
 						<!--<div ng-include="templateView.template"></div>-->
+	<div ng-show="added">
+	<center><h4>
+	Your Parking space has been added!<br>
+	You can view it in the "View my Parking Spaces" tab.
+	</h4></center>
+	</div>
+	<br>
 						<div class="row" ng-init="initAutocomplete()">
 	<input id="pac-input"  class="controls" type="text"
 		placeholder="Search Box">
 	<div id="map" style="width: 500px; height: 500px;"></div>
 	<br>
-	<input type="button" ng-click="getLocation()" value="Add parking space">
-	<div ng-show="added">
-	Your Parking space has been added!
-	You can view it in the "View my Parking Spaces" tab.
-	</div>
+	&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp
+	&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp
+	
+	<input type="button" class="btn btn-primary" ng-click="getLocation()" value="Add parking space">
 	<br>
 	</div>
 					</div>

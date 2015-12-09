@@ -91,12 +91,19 @@
 					<!-- wite code here -->
 						<!--<div ng-include="templateView.template"></div>-->
      
-     <div ng-repeat="item in listing">
-     <div class="col-md-6">
-      {{item.address}} {{item.availableFrom}}
-      </div>
-      <div class="col-md-4">
-      <input type="checkbox" ng-model="status" ng-checked="item.status=='0'" ng-init="status=(item.status=='0')" ng-click="changeStatus(item.parkingSpaceId)">Available</input> 
+ <div ng-repeat="item in listing">
+     <table class="table">
+     <tr>
+     <th>ADDRESS</th>
+     <th>AVAILABILITY</th>
+     <TH></TH>
+     </tr>
+      <TR>
+      <TD>
+      {{item.address}}
+      </TD>
+      <TD>
+      <input type="checkbox" ng-model="status" ng-checked="item.status=='0'" ng-init="status=(item.status=='0')" ng-click="changeStatus(item.address)">Available</input> 
   <p ng-show="status"> AVAILABLE FROM : <select id ="selectcheckintiming" ng-model="checkIn" class="ng-pristine ng-valid ng-touched" ng-change="GetValue(checkIn)">	
         <option selected="selected" label={{item.availableFrom}}></option>
 <option ng-repeat="y in drop1">{{y}}</option></select> </p>
@@ -104,11 +111,14 @@
 <p ng-show="status"> AVAILABLE TO :<select id="selectcheckouttiming" ng-model="checkOut" class="ng-pristine ng-valid ng-touched">
 <option selected="selected" label={{item.availableTo}}></option>
 <option ng-repeat="x in drop2">{{x}}</option></select>
-</div>
-<div class="col-md-2">
-	<button ng-click="changeAvailabilityTime(checkIn,checkOut,item.parkingSpaceId)">Save</button> </p>
- 	</div>
+</TD>
+<TD>
+	<button ng-click="changeAvailabilityTime(checkIn,checkOut,item.address)">Save</button> </p>
+	</TD>
+	</TR>
+ </table>
 					</div>
+					
 				</div>
 
 			</div>

@@ -20,7 +20,7 @@ $scope.ownerProfile = function() {
 			
 			$scope.viewAllOwnerContracts = function() {
 				console.log("In owner controller");
-				$window.alert("In controller");
+				//$window.alert("In controller");
 				$window.location="/view_contracts";
 				};
 				
