@@ -79,9 +79,6 @@
 						<!--<div ng-include="templateView.template"></div>-->
 						
 						
-						
-     
-<<<<<<< HEAD
  <div ng-repeat="item in listing">
      <table class="table">
      <tr>
@@ -94,13 +91,11 @@
       {{item.address}}
       </TD>
       <TD>
-=======
      <div ng-repeat="item in listing">
      <div class="col-md-6">
       {{item.address}}
       </div>
       <div class="col-md-4">
->>>>>>> dfdb5f5224010e75cd74d0f06a6fcf2c6233982e
       <input type="checkbox" ng-model="status" ng-checked="item.status=='0'" ng-init="status=(item.status=='0')" ng-click="changeStatus(item.address)">Available</input> 
   <p ng-show="status"> AVAILABLE FROM : <select id ="selectcheckintiming" ng-model="checkIn" class="ng-pristine ng-valid ng-touched" ng-change="GetValue(checkIn)">	
         <option selected="selected" label={{item.availableFrom}}></option>
@@ -109,19 +104,19 @@
 <p ng-show="status"> AVAILABLE TO :<select id="selectcheckouttiming" ng-model="checkOut" class="ng-pristine ng-valid ng-touched">
 <option selected="selected" label={{item.availableTo}}></option>
 <option ng-repeat="x in drop2">{{x}}</option></select>
-<<<<<<< HEAD
+
 </TD>
 <TD>
 	<button ng-click="changeAvailabilityTime(checkIn,checkOut,item.address)">Save</button> </p>
 	</TD>
 	</TR>
  </table>
-=======
+
 </div>
 <div class="col-md-2">
 	<button ng-click="changeAvailabilityTime(checkIn,checkOut,item.address)">Save</button> </p>
  	</div>
->>>>>>> dfdb5f5224010e75cd74d0f06a6fcf2c6233982e
+
 					</div>
 					
 				</div>
