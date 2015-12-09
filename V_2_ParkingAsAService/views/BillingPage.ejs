@@ -1,0 +1,116 @@
+<!DOCTYPE html>
+<html>
+<head>
+<style>
+.instapark-header {
+  text-transform:uppercase;	
+  color: #909090;
+  background: #E8E8E8;
+  line-height: 70px;
+  font-family: "Times New Roman", Georgia, Serif;
+  letter-spacing: 1px;
+  height: 70px;
+  text-align:center;
+  font-style: normal;
+}
+
+</style>
+<script src= "http://ajax.googleapis.com/ajax/libs/angularjs/1.3.14/angular.min.js"></script>
+<link rel="stylesheet" href="http://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/css/bootstrap.min.css">
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.3/jquery.min.js"></script>
+<script src="http://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/js/bootstrap.min.js"></script>
+</head>
+<body>
+<script type="text/javascript">
+var appangular = angular.module('myApp', []);
+appangular.controller('myController',function($scope,$http,$window){
+	$scope.totalrent="$28";
+	$scope.parking_location="1318 The Alameda, Apt no.344, San Jose, CA-95126";
+	$scope.durationstring="1.5";
+	$scope.startTime="12:00";
+	$scope.endTime="17:00";
+	$scope.cardnumber="4231098725630984";
+	$scope.cardnumber_substring=$scope.cardnumber.substring(12);
+	$scope.displaycardnumber="************"+$scope.cardnumber_substring;
+});
+</script>
+<div class="row text-center">
+<div class="col-xs-12">
+<img class="img-responsive" src="/images/sanfran1.jpg" style="width:100%;height:220px;position:relative;z-index:0">
+</div>
+<img class="img-circle center" src="/images/default_avatar.jpg" width="100" height="100" style="position:relative;top:-40px;">
+<p style="text-align:middle"><%=user.loggedInUserFname%>&nbsp; &nbsp; &nbsp; <%=user.loggedInUserLname%></p>
+</div>
+<div class="row instapark-header">
+Instapark Receipt
+</div>
+<div ng-app="myApp" ng-controller="myController">
+<div class="row">
+<div class="col-xs-6">
+<div class="col-xs-1"></div>
+<div class="col-xs-5">
+<p style="color:#000000;">Duration</p>
+</div>
+</div>
+<div class="col-xs-6">
+<div class="col-xs-5"></div>
+<div class="col-xs-1">
+<%=duration%>
+</div>
+</div>
+</div>
+<div class="row">
+<div class="col-xs-6">
+<div class="col-xs-1"></div>
+<div class="col-xs-5">
+<p style="color:#000000;">Start Time</p>
+</div>
+</div>
+<div class="col-xs-6">
+<div class="col-xs-5"></div>
+<div class="col-xs-1">
+<%=checkin%>
+</div>
+</div>
+</div>
+
+<div class="row">
+<div class="col-xs-6">
+<div class="col-xs-1"></div>
+<div class="col-xs-5">
+<p style="color:#000000;">End Time</p>
+</div>
+</div>
+<div class="col-xs-6">
+<div class="col-xs-5"></div>
+<div class="col-xs-1">
+<%=checkout%>
+</div>
+</div>
+</div>
+<hr style="width=5px">
+<div class="row">
+<div class="col-xs-6">
+<div class="col-xs-1"></div>
+<div class="col-xs-5">
+<p style="color: #909090;">CHARGED</p>
+</div>
+</div>
+</div>
+<div class="row">
+<div class="col-xs-6">
+<div class="col-xs-1"></div>
+<div class="col-xs-5">
+<img src="/images/visa_business_credit_card.jpg" width="50" height="30">  Personal <%=user.loggedInCreditCardNumberHidden%>
+</div>
+</div>
+<div class="col-xs-6">
+<div class="col-xs-5"></div>
+<div class="col-xs-1">
+<%=total%>$
+</div>
+</div>
+</div>
+</div>
+</body>
+</html>

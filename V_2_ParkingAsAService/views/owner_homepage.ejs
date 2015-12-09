@@ -4,7 +4,8 @@
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <script type="text/javascript"
 	src="http://cdnjs.cloudflare.com/ajax/libs/jquery/2.0.3/jquery.min.js"></script>
-<script src= "http://ajax.googleapis.com/ajax/libs/angularjs/1.3.14/angular.min.js"></script>
+<script
+	src="http://ajax.googleapis.com/ajax/libs/angularjs/1.3.14/angular.min.js"></script>
 <script type="text/javascript"
 	src="http://netdna.bootstrapcdn.com/bootstrap/3.3.4/js/bootstrap.min.js"></script>
 <script
@@ -12,7 +13,8 @@
 	async defer></script>
 <script src="/angular-google-maps/dist/angular-google-maps.js"></script>
 <script src="../js/searchbox.js"></script>
-<script type="text/javascript" src="../js/controllers/OwnerController.js"></script>
+<script type="text/javascript"
+	src="../js/controllers/OwnerController.js"></script>
 <link
 	href="http://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.3.0/css/font-awesome.min.css"
 	rel="stylesheet" type="text/css">
@@ -22,95 +24,196 @@
 
 </head>
 <body ng-app="OwnerApp" ng-controller="OwnerController">
-	
-		<div class="section text-center head">
-			<!-- <div class="container"> -->
-				<div class="row">
-					<div class="col-md-3"></div>
-					<div class="col-md-6" style="font-size: 90%;letter-spacing: 2px;">Parking as a Service</div>
-					<div class="col-md-1"></div>
-					<div class="col-md-2">
-						<div class="btn-group btn-group-lg" style="letter-spacing: 1px;">
-							<a class="btn btn-link dropdown-toggle" data-toggle="dropdown">
-								<span class="badge"> <i
-									class="fa fa-border fa-user fa-fw fa-lg glyphi"> </i></span> 
-									<%=user.loggedInUserFname%>
-									 <span
-								class="fa fa-caret-down"> </span> </i>
-							</a>
-							
 
-							<ul class="dropdown-menu" role="menu">
-								<li class="hidden-xs"><img alt="no Img"
-								src="/images/profile.jpeg" height="130px" width="130px"
-								style="border-radius: 70px;"></li>
-							<li class="hidden-xs mylist">
-							<a href="" ng-click="ownerProfile()" style="color: gray;">Profile</a></li>
-							<li class="hidden-xs mylist">
-							<a href="" ng-click="addParkingPage()" style="color: gray;">Add a Parking space</a></li>
-							<li class="hidden-xs mylist">
-							<a href="" ng-click="viewMyParkingSpaces()" style="color: gray;">View my parking spaces</a></li>
-							<li class="hidden-xs mylist">
-							<a href="" ng-click="viewAllOwnerContracts()" style="color: gray;">View all contracts</a></li>
-							<li class="mylist">
-							<a href="" ng-click="logout()" style="color: gray;">Logout</a>
-							</li>
-								</li>
-							</ul>
-						</div>
-						<br>
-					</div>
-				<!-- </div> -->
+	<div class="section text-center head">
+		<!-- <div class="container"> -->
+		<div class="row">
+			<div class="col-md-3"></div>
+			<div class="col-md-6" style="font-size: 90%; letter-spacing: 2px;">Parking
+				as a Service</div>
+			<div class="col-md-1"></div>
+			<div class="col-md-2">
+				<div class="btn-group btn-group-lg" style="letter-spacing: 1px;">
+					<a class="btn btn-link dropdown-toggle" data-toggle="dropdown">
+						<span class="badge"> <i
+							class="fa fa-border fa-user fa-fw fa-lg glyphi"> </i></span>
+						<%=user.loggedInUserFname%> <span class="fa fa-caret-down">
+					</span> </i>
+					</a>
+
+
+					<ul class="dropdown-menu" role="menu">
+						<li class="hidden-xs"><img alt="no Img"
+							src="/images/profile.jpeg" height="130px" width="130px"
+							style="border-radius: 70px;"></li>
+						<li class="hidden-xs mylist"><a href=""
+							ng-click="ownerProfile()" style="color: gray;">Profile</a></li>
+						<li class="hidden-xs mylist"><a href=""
+							ng-click="addParkingPage()" style="color: gray;">Add a
+								Parking space</a></li>
+						<li class="hidden-xs mylist"><a href=""
+							ng-click="viewMyParkingSpaces()" style="color: gray;">View my
+								parking spaces</a></li>
+						<li class="hidden-xs mylist"><a href=""
+							ng-click="viewAllOwnerContracts()" style="color: gray;">View
+								all contracts</a></li>
+						<li class="mylist"><a href="" ng-click="logout()"
+							style="color: gray;">Logout</a></li>
+						</li>
+					</ul>
+				</div>
+				<br>
 			</div>
+			<!-- </div> -->
 		</div>
-		<div class="btn-group-vertical vertinav" style="min-height: 100%;">
-			<div class="container clear-top"
-				style="overflow: auto; padding-bottom: 150px;">
-				<div class="row">
-					<div class="col-md-2">
-						<ul class="lead nav nav-pills nav-stacked">
-							<li class="hidden-xs"><img alt="no Img"
-								src="/images/profile.jpeg" height="130px" width="130px"
-								style="border-radius: 70px;"></li>
-							<li class="hidden-xs mylist">
-							<a href="" ng-click="ownerProfile()" style="color: gray;">Profile</a></li>
-							<li class="hidden-xs mylist">
-							<a href="" ng-click="addParkingPage()" style="color: gray;">Add a Parking space</a></li>
-							<li class="hidden-xs mylist">
-							<a href="" ng-click="viewMyParkingSpaces()" style="color: gray;">View my parking spaces</a></li>
-							<li class="hidden-xs mylist">
-							<a href="" ng-click="viewAllOwnerContracts()" style="color: gray;">View all contracts</a></li>
-							<li class="mylist">
-							<a href="" ng-click="logout()" style="color: gray;">Logout</a>
-							</li>
-						</ul>
-					</div>
-					<div class="col-md-8 container-fluid mycontainer">
+	</div>
+	<div class="btn-group-vertical vertinav" style="min-height: 100%;">
+		<div class="container clear-top"
+			style="overflow: auto; padding-bottom: 150px;">
+			<div class="row">
+				<div class="col-md-2">
+					<ul class="lead nav nav-pills nav-stacked">
+						<li class="hidden-xs"><img alt="no Img"
+							src="/images/profile.jpeg" height="130px" width="130px"
+							style="border-radius: 70px;"></li>
+						<li class="hidden-xs mylist"><a href=""
+							ng-click="ownerProfile()" style="color: gray;">Profile</a></li>
+						<li class="hidden-xs mylist"><a href=""
+							ng-click="addParkingPage()" style="color: gray;">Add a
+								Parking space</a></li>
+						<li class="hidden-xs mylist"><a href=""
+							ng-click="viewMyParkingSpaces()" style="color: gray;">View my
+								parking spaces</a></li>
+						<li class="hidden-xs mylist"><a href=""
+							ng-click="viewAllOwnerContracts()" style="color: gray;">View
+								all contracts</a></li>
+						<li class="mylist"><a href="" ng-click="logout()"
+							style="color: gray;">Logout</a></li>
+					</ul>
+				</div>
+				<div class="col-md-8 container-fluid mycontainer">
 					<!-- wite code here -->
-						<!--<div ng-include="templateView.template"></div>-->
-						Owner home
-
+					<!--<div ng-include="templateView.template"></div>-->
+					
+					<div class="row"></div>
+					<div class="row">
+						<div class="col-xs-6">
+							<img src="/images/profile.jpeg" width="40" height="45"
+								style="padding-top: 22px; float: left">
+							<p
+								style="color: #000000; font-size: 150%; padding-top: 20px; float: left;">
+								FirstName</p>
+						</div>
+						<div class="col-xs-6">
+							<p
+								style="color: #000000; font-size: 150%; padding-top: 20px; padding-left: 20px"><%=user.loggedInUserFname%>
+							</p>
+						</div>
+					</div>
+					<div class="row">
+						<div class="col-xs-6">
+							<img src="/images/profile.jpeg" width="40" height="45"
+								style="padding-top: 22px; float: left">
+							<p
+								style="color: #000000; font-size: 150%; padding-top: 20px; float: left;">
+								LastName</p>
+						</div>
+						<div class="col-xs-6">
+							<p
+								style="color: #000000; font-size: 150%; padding-top: 20px; padding-left: 20px"><%=user.loggedInUserLname%>
+							</p>
+						</div>
+					</div>
+					<div class="row">
+						<div class="col-xs-6">
+							<img src="/images/email_icon.png" width="40" height="45"
+								style="padding-top: 22px; float: left">
+							<p
+								style="color: #000000; font-size: 150%; padding-top: 20px; float: left;">
+								Username</p>
+						</div>
+						<div class="col-xs-6">
+							<p
+								style="color: #000000; font-size: 150%; padding-top: 20px; padding-left: 20px"><%=user.loggedInUserName%>
+							</p>
+						</div>
+					</div>
+					<div class="row">
+						<div class="col-xs-6">
+							<img src="/images/address.png" width="40" height="45"
+								style="padding-top: 22px; float: left">
+							<p
+								style="color: #000000; font-size: 150%; padding-top: 20px; float: left">
+								Address</p>
+						</div>
+						<div class="col-xs-6">
+							<p
+								style="color: #000000; font-size: 150%; padding-top: 20px; padding-left: 20px;"><%=user.loggedInAddress%></p>
+						</div>
+					</div>
+					<div class="row">
+						<div class="col-xs-6">
+							<img src="/images/city.png" width="40" height="45"
+								style="padding-top: 22px; float: left">
+							<p
+								style="color: #000000; font-size: 150%; padding-top: 20px; float: left;">
+								City</p>
+						</div>
+						<div class="col-xs-6">
+							<p
+								style="color: #000000; font-size: 150%; padding-top: 20px; padding-left: 20px;"><%=user.loggedInCity%></p>
+						</div>
+					</div>
+					<div class="row">
+						<div class="col-xs-6">
+							<img src="/images/state2.jpg" width="40" height="45"
+								style="padding-top: 22px; float: left">
+							<p
+								style="color: #000000; font-size: 150%; padding-top: 20px; float: left;">
+								State</p>
+						</div>
+						<div class="col-xs-6">
+							<p
+								style="color: #000000; font-size: 150%; padding-top: 20px; padding-left: 20px;"><%=user.loggedInState%></p>
+						</div>
+					</div>
+					<div class="row">
+						<div class="col-xs-6">
+							<img src="/images/zipcode.png" width="40" height="45"
+								style="padding-top: 22px; float: left">
+							<p
+								style="color: #000000; font-size: 150%; padding-top: 20px; float: left;">
+								Zipcode</p>
+						</div>
+						<div class="col-xs-6">
+							<p
+								style="color: #000000; font-size: 150%; padding-top: 20px; padding-left: 20px;"><%=user.loggedInZipcode%></p>
+						</div>
 					</div>
 				</div>
+			</div>
 
+		</div>
+	</div>
+
+	</div>
+	</div>
+	<footer class="foot">
+		<div>
+			<div class="col-md-3" style="padding: 0px;">
+				<div class="col-md-2 glyphi">
+					<a><i class="fa fa-border fa-fw fa-lg fa-twitter glyphi"></i></a>
+				</div>
+				<div class="col-md-2 glyphi">
+					<a><i class="fa fa-border fa-facebook fa-fw fa-lg glyphi"></i></a>
+				</div>
+				<div class="col-md-2 glyphi">
+					<a><i class="fa fa-border fa-fw fa-lg fa-linkedin glyphi"></i></a>
+				</div>
 			</div>
 		</div>
-		<footer class="foot">
-			<div>
-				<div class="col-md-3" style="padding: 0px;">
-					<div class="col-md-2 glyphi">
-						<a><i class="fa fa-border fa-fw fa-lg fa-twitter glyphi"></i></a>
-					</div>
-					<div class="col-md-2 glyphi">
-						<a><i class="fa fa-border fa-facebook fa-fw fa-lg glyphi"></i></a>
-					</div>
-					<div class="col-md-2 glyphi">
-						<a><i class="fa fa-border fa-fw fa-lg fa-linkedin glyphi"></i></a>
-					</div>
-				</div>
-			</div>
-		</footer>
-	
+	</footer>
+
 
 </body>
 

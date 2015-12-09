@@ -47,6 +47,8 @@ function after_renter_login(req,res) {
 				req.session.loggedInPhone = user.phoneNo;
 //Card details
 				req.session.loggedInCreditCardNumber = user.creditCardNumber;
+				req.session.loggedInCreditCardNumberHidden="************"+user.creditCardNumber.substring(12);
+				console.log("loggedincreditcardhidden"+req.session.loggedInCreditCardNumberHidden);
 				req.session.loggedInNameOnCard = user.nameOnCard;
 				req.session.loggedInExpiry = user.expiry;
 				req.session.loggedInSecurityCode  = user.securityCode ;
@@ -74,12 +76,11 @@ function after_renter_login(req,res) {
 		});
 	});
 }
-
 function before_owner_login(req,res) {
 	console.log("in before owner signin");
 	res.render('owner_login');
+	
 }
-
 function after_owner_login(req,res) {
 	console.log("In after login");
 	var username, password;
@@ -116,6 +117,8 @@ function after_owner_login(req,res) {
 				req.session.loggedInPhone = user.phoneNo;
 //Card details
 				req.session.loggedInCreditCardNumber = user.creditCardNumber;
+				
+				
 				req.session.loggedInNameOnCard = user.nameOnCard;
 				req.session.loggedInExpiry = user.expiry;
 				req.session.loggedInSecurityCode  = user.securityCode ;

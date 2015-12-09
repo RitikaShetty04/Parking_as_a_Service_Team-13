@@ -13,3 +13,13 @@ V_2_ParkingAsAService/public/js/controllers/OwnerController.js
 V_2_ParkingAsAService/public/js/controllers/OwnerController.js
 V_2_ParkingAsAService/views/addParkingSpace.ejs
 V_2_ParkingAsAService/views/viewparkingspaces.ejs
+V_2_ParkingAsAService/app.js
+V_2_ParkingAsAService/package.json
+V_2_ParkingAsAService/routes/getParkingSpaces.js
+V_2_ParkingAsAService/routes/login.js
+V_2_ParkingAsAService/routes/Signup.js
+V_2_ParkingAsAService/routes/viewparkingspaces.js
+V_2_ParkingAsAService/views/index.ejs
+V_2_ParkingAsAService/views/owner_homepage.ejs
+V_2_ParkingAsAService/views/renter_homepage.ejs
+V_2_ParkingAsAService/views/reserve_button.ejs

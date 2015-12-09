@@ -7,9 +7,12 @@
   },
   "dependencies": {
     "angular-google-maps": "^2.2.1",
+    "angular-recaptcha": "^2.2.5",
     "connect-mongo": "^0.8.2",
     "ejs": "*",
     "express": "3.2.6",
-    "express-session": "^1.12.1"
+    "express-recaptcha": "^2.0.0",
+    "express-session": "^1.12.1",
+    "https": "^1.0.0"
   }
 }

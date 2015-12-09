@@ -35,6 +35,7 @@
 		var map;
 		var marker;
 		$scope.clickedSpace;
+		var iconBase = 'https://maps.google.com/mapfiles/kml/shapes/';
 
 		$scope.createMap = function(Latitude, Longitude) {
 			var mapProp = {
@@ -137,9 +138,15 @@
 			marker = new google.maps.Marker({
 				position : new google.maps.LatLng($scope.Latitude,
 						$scope.Longitude),
+						
 			});
 
 			marker.setMap(map);
+			var infowindow = new google.maps.InfoWindow({
+				  content:"You are Here!"
+				  });
+
+				infowindow.open(map,marker);
 
 			//.setMap(null);
 
@@ -150,6 +157,7 @@
 					position : new google.maps.LatLng(
 							$scope.filtered[i].lattitude,
 							$scope.filtered[i].longitude),
+							icon: iconBase + 'parking_lot_maps.png'
 				});
 				markers.push(marker);
 				marker.setMap(map);
@@ -178,11 +186,17 @@
 			google.maps.event.addListener(marker, 'click', function() {
 				console.log("inside marker add event" + filtered.address);
 				$scope.value = filtered.address;
+				$scope.clickedSpace = filtered;
 				//console.log("title inside" + $scope.value);
 				document.getElementById("space").innerHTML = filtered.address;
-				$scope.clickedSpace = filtered;
+				document.getElementById("availableFrom").innerHTML = filtered.availableFrom;
+				document.getElementById("availableTo").innerHTML = filtered.availableTo;
+				
+				
+				console.log("clickedSpace1"+$scope.clickedSpace);
 			});
 			//console.log("title outside" + $scope.value);
+			
 
 		}
 
@@ -248,10 +262,10 @@
 
 		$scope.goToReserve=function()
 		{
-			
+			console.log("clickedSpace"+$scope.clickedSpace.address);
 		console.log("in gotoreserve");
 			$http({
-				method : "get",
+				method : "POST",
 				url : '/goToReserve',
 				data : {
 					'data' : $scope.clickedSpace
@@ -360,7 +374,9 @@
 				</div>
 				<div class="col-md-2">
 					<a id="space" ng-model="clickedSpace"
-						ng-click="goToReserve()"></a>
+						ng-click="goToReserve(); value1=1" style="font-size:20px;"></a>
+						<div>AVAILABLE FROM : <label id="availableFrom"></label></div>
+						<div>AVAILABLE TO : <label id="availableTo"></label></div>
 				</div>
 			</div>
 
