@@ -8,7 +8,7 @@ var checkLoggedInUser=require('./checkLoggedInUser.js');
 exports.waytoviewparkingspaces=function(req,res)
 {
 	if (checkLoggedInUser.checkLoggedInUser(req, res) === true) {
-res.render('viewparkingspaces');	
+res.render('viewparkingspaces',{'user':req.session});	
 	}
 	else {
 		res.render('login');
@@ -21,10 +21,10 @@ exports.listParkingOfOwner=function(req,res)
 	if (checkLoggedInUser.checkLoggedInUser(req, res) === true) {
 	mongo.connect(mongoURL, function(){
 		console.log('Connected to mongo at: ' + mongoURL);
-		
+		var username=req.session.loggedInUserName;
 		var coll = mongo.collection('parkingSpace');
 			
-		var cursor=coll.find({owner_username: 'Saina'}).toArray(function(err,items){
+		var cursor=coll.find({owner_username: username}).toArray(function(err,items){
 			{
 				if(err)
 					{

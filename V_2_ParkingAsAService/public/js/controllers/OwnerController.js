@@ -2,6 +2,12 @@ var app = angular.module('OwnerApp', []);
 app.controller('OwnerController', function($scope, $http, $location, $window)
 		  {
 	$scope.result="";
+	
+$scope.ownerProfile = function() {
+		console.log("In Profile controller");
+		$window.location="/ownerProfile";
+		};
+		
 	$scope.addParkingPage = function() {
 		console.log("In owner controller");
 		$window.location="/addParkingPage";
@@ -9,7 +15,7 @@ app.controller('OwnerController', function($scope, $http, $location, $window)
 		
 		$scope.viewMyParkingSpaces = function() {
 			console.log("In owner controller");
-			$window.location="/viewMyParkingSpaces";
+			$window.location="/waytoviewparkingspaces";
 			};
 			
 			$scope.viewAllOwnerContracts = function() {
