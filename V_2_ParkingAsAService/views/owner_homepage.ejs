@@ -1,3 +1,4 @@
+<<<<<<< HEAD
 <html>
 <head>
 <meta charset="utf-8">
@@ -115,3 +116,130 @@
 </body>
 
 </html>
+=======
+<html ng-app="myApp" ng-controller="owner_controller">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<script type="text/javascript"
+	src="http://cdnjs.cloudflare.com/ajax/libs/jquery/2.0.3/jquery.min.js"></script>
+<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.4.0/css/font-awesome.min.css">
+<script type="text/javascript"
+	src="http://netdna.bootstrapcdn.com/bootstrap/3.3.4/js/bootstrap.min.js"></script>
+	<script src= "http://ajax.googleapis.com/ajax/libs/angularjs/1.2.26/angular.min.js"></script>
+<link
+	href="http://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.3.0/css/font-awesome.min.css"
+	rel="stylesheet" type="text/css">
+<link rel='stylesheet' href='/stylesheets/home.css' />
+<script
+	src="https://maps.googleapis.com/maps/api/js?key=AIzaSyA-oZe92CCa_iLFuh9G38u9O3PQixXZk5I&libraries=places"
+	async defer></script>
+<script src="/angular-google-maps/dist/angular-google-maps.js"></script>
+<script src="../js/searchbox.js"></script>
+</head>
+<body>
+	
+		<div class="section text-center head">
+			<!-- <div class="container"> -->
+				<div class="row">
+					<div class="col-md-3"></div>
+					<div class="col-md-6">Parking as a Service</div>
+					<div class="col-md-1"></div>
+					<div class="col-md-2">
+						<div class="btn-group btn-group-lg" style="letter-spacing: 1px;">
+							<a class="btn btn-link dropdown-toggle" data-toggle="dropdown">
+								<span class="badge"> <i
+									class="fa fa-border fa-user fa-fw fa-lg glyphi"> </i></span> 
+									<%=user.loggedInUserFname%>
+									 <span
+								class="fa fa-caret-down"> </span> </i>
+							</a>
+							
+
+							<ul class="dropdown-menu" role="menu">
+								<li class="hidden-xs mylist"><img alt="no Img"
+									src="default_avatar.jpg" height="50px" width="50px"
+									style="padding: 10px;"></li>
+								<li class="hidden-xs mylist"><a href="#"
+									style="color: gray;">Profile</a></li>
+								<li class="hidden-xs mylist"><a href="#"
+									style="color: gray;">Add a Parking space</a></li>
+								<li class="hidden-xs mylist"><a href="#"
+									style="color: gray;" ng-click=waytoviewparkingspaces()>View my parking spaces</a></li>
+								<li class="hidden-xs mylist"><a href="#"
+									style="color: gray;">View all contracts</a></li>
+								<li class="mylist"><a href="#" style="color: gray;">Logout</a>
+								</li>
+							</ul>
+						</div>
+						<br>
+					</div>
+				<!-- </div> -->
+			</div>
+		</div>
+		<div class="btn-group-vertical vertinav" style="min-height: 100%;">
+			<div class="container clear-top"
+				style="overflow: auto; padding-bottom: 150px;">
+				<div class="row">
+					<div class="col-md-2">
+						<ul class="lead nav nav-pills nav-stacked">
+							<li class="hidden-xs"><img alt="no Img"
+								src="default_avatar.jpg" height="130px" width="130px"
+								style="border-radius: 70px;"></li>
+							<li class="hidden-xs mylist"><a href="#"
+								style="color: gray;">Profile</a></li>
+							<li class="hidden-xs mylist"><a href="#"
+								style="color: gray;">Add a Parking space</a></li>
+							<li class="hidden-xs mylist"><a href="#"
+								style="color: gray;" ng-click=waytoviewparkingspaces()>View my parking spaces</a></li>
+							<li class="hidden-xs mylist"><a href="#"
+								style="color: gray;">View all contracts</a></li>
+							<li class="mylist"><a href="#" style="color: gray;">Logout</a>
+							</li>
+						</ul>
+					</div>
+					<div class="col-md-8 container-fluid mycontainer">
+					<!-- wite code here -->
+						<!--<div ng-include="templateView.template"></div>-->
+					</div>
+				</div>
+
+			</div>
+		</div>
+		<footer class="foot">
+			<div>
+				<div class="col-md-3" style="padding: 0px;">
+					<div class="col-md-2 glyphi">
+						<a><i class="fa fa-border fa-fw fa-lg fa-twitter glyphi"></i></a>
+					</div>
+					<div class="col-md-2 glyphi">
+						<a><i class="fa fa-border fa-facebook fa-fw fa-lg glyphi"></i></a>
+					</div>
+					<div class="col-md-2 glyphi">
+						<a><i class="fa fa-border fa-fw fa-lg fa-linkedin glyphi"></i></a>
+					</div>
+				</div>
+			</div>
+		</footer>
+	
+
+
+
+
+<script>
+var myApp=angular.module('myApp',[]);
+myApp.controller('owner_controller',function($scope,$http,$location,$window)
+{
+console.log("outside");
+$scope.waytoviewparkingspaces=function()
+{
+console.log("inside");
+window.location='/waytoviewparkingspaces';
+}
+
+});
+</script>
+
+</body>
+</html>
+>>>>>>> origin/master

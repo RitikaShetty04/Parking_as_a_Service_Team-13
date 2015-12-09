@@ -10,8 +10,13 @@ var express = require('express')
   ,login=require("./routes/login")
   ,view_contracts=require("./routes/view_contracts")
   ,reserve=require("./routes/reserveParking")
+<<<<<<< HEAD
   ,addParkingSpace=require("./routes/addParkingSpace")
   ,owner=require("./routes/owner");
+=======
+  ,getParkingSpaces=require('./routes/getParkingSpaces')
+  ,viewparkingspaces=require('./routes/viewparkingspaces');
+>>>>>>> origin/master
 
 var app = express();
 
@@ -59,6 +64,7 @@ app.post('/login',login.after_owner_login);
 app.get('/adminLogin',login.before_admin_login);
 app.post('/adminLogin',login.after_admin_login);
 app.get('/searchParking',reserve.searchParking);
+<<<<<<< HEAD
 app.post('/addParkingSpace',addParkingSpace.addParkingSpace);
 
 
@@ -68,6 +74,16 @@ app.get('/logout', addParkingSpace.logout);
 
 
 
+=======
+//app.post('/addParkingSpace',login.after_admin_login);
+app.get('/waytoviewparkingspaces',viewparkingspaces.waytoviewparkingspaces);
+app.post('/listParkingOfOwner',viewparkingspaces.listParkingOfOwner);
+app.post('/changeAvailableTime',viewparkingspaces.changeAvailableTime);
+app.post('/changeStatus',viewparkingspaces.changeStatus);
+app.get('/getParkingSpaces',getParkingSpaces.getParkingSpaces);
+app.get('/goToReserve',getParkingSpaces.goToReserve);
+app.get('/goToReserveConfirm',getParkingSpaces.goToReserveConfirm);
+>>>>>>> origin/master
 
 mongo.connect(mongoSessionConnectURL, function() {
 	http.createServer(app).listen(app.get('port'), function() {
