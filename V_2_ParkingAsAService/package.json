@@ -13,6 +13,7 @@
     "express": "3.2.6",
     "express-recaptcha": "^2.0.0",
     "express-session": "^1.12.1",
-    "https": "^1.0.0"
+    "https": "^1.0.0",
+    "bcrypt-nodejs": "0.0.3"
   }
 }

@@ -11,7 +11,7 @@
 	href="http://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/css/bootstrap.min.css">
 <link href="http://fonts.googleapis.com/css?family=Lato"
 	rel="stylesheet" type="text/css">
-	<script src="../js/facebookconnect.js"></script>
+<script src="../js/facebookconnect.js"></script>
 <link href="http://fonts.googleapis.com/css?family=Montserrat"
 	rel="stylesheet" type="text/css">
 <script
@@ -19,8 +19,8 @@
 
 <script
 	src="http://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/js/bootstrap.min.js"></script>
- <script src='https://www.google.com/recaptcha/api.js'></script>
-	 
+<script src='https://www.google.com/recaptcha/api.js'></script>
+
 <style>
 body {
 	font: 400 15px/1.8 Lato, sans-serif;
@@ -35,7 +35,7 @@ h3, h4 {
 }
 
 .container {
-	padding: 80px 120px;
+	padding: 20px 120px;
 }
 
 .person {
@@ -69,8 +69,8 @@ h3, h4 {
 }
 
 .bg-1 {
-	background: #2d2d30;
-	color: #bdbdbd;
+	background: #FFFFFF;
+	color: #2d2d30;
 }
 
 .bg-1 h3 {
@@ -240,211 +240,230 @@ textarea {
 			</div>
 		</nav>
 		<!-- Modal -->
-		<div class="modal fade" id="check" role="dialog">
-			<div class="modal-dialog">
+		<form>
+			<div class="modal fade" id="check" role="dialog">
+				<div class="modal-dialog">
 
-				<!-- Modal content-->
-				<div class="modal-content">
-					<div class="modal-header" style="height: 100px;">
-						<button type="button" class="close" data-dismiss="modal">&times;</button>
-						SignUp
-					</div>
-					<center>
-						<fb:login-button data-size='xlarge' scope="email"
-							onlogin="checkLoginState(); testAPI();"
-							style="width=100%; height=100%;">
-						</fb:login-button>
-					</center>
-					<div class="modal-body">
-						<div style="max-width: 450px; left: 30%;">
-							<form>
-								<div class="form-group  usernameDiv">
-									<center>
-										<b><i>How do you want to Sign Up as?</i><br> <input
-											type="radio" ng-model="radioValue" name="signUpAs"
-											value="owner" required="required">Owner&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp
-											<input type="radio" ng-model="radioValue" name="signUpAs"
-											value="renter" required="required">Renter </b>
-									</center>
-									<div class="col-sm-12">Profile:</div>
-									<div class="col-sm-6">
-										<input type="text" ng-model="firstName" class="form-control"
-											name="firstName" id="firstName" placeholder="First Name"
-											required>
-									</div>
-									<div class="col-sm-6">
-										<input type="text" ng-model="lastName" class="form-control"
-											name="lastName" id="lastName" placeholder="Last Name"
-											required>
-									</div>
-									<div class="col-sm-6">
-										<input type="text" ng-model="phoneNo" class="form-control"
-											name="phoneNo" id="phoneNo" placeholder="PhoneNo" required>
-									</div>
-									<div class="col-sm-6">
-										<input type="email" ng-model="email" class="form-control"
-											name="email" id="email" placeholder="Email" required>
-									</div>
-									<div class="col-sm-6">
-										<input type="password" ng-model="password"
-											class="form-control" name="password" id="password"
-											placeholder="Password" required>
-									</div>
-									<div class="col-sm-6">
-										<input type="password" ng-model="retypePassword"
-											class="form-control" name="retypePassword"
-											id="retypePassword" placeholder="Confirm Password" required>
-									</div>
-									<div class="col-sm-12">Address:</div>
+					<!-- Modal content-->
+					<div class="modal-content">
+						<div class="modal-header" style="height: 100px;">
+							<button type="button" class="close" data-dismiss="modal"> &times;</button>
+							SignUp
+						</div>
+						<center>
+							<fb:login-button data-size='xlarge' scope="email"
+								onlogin="checkLoginState(); testAPI();"
+								style="width=100%; height=100%;">
+							</fb:login-button>
+						</center>
+						<div class="modal-body">
+							<div style="max-width: 450px; left: 30%;">
+								<form>
+									<div class="form-group  usernameDiv">
+										<center>
+											<b><i>How do you want to Sign Up as?</i><br> <input
+												type="radio" ng-model="radioValue" name="signUpAs"
+												value="owner" required="required">Owner&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp
+												<input type="radio" ng-model="radioValue" name="signUpAs"
+												value="renter" required="required">Renter </b>
+										</center>
+										<div class="col-sm-12">Profile:</div>
+										<div class="col-sm-6">
+											<input type="text" ng-model="firstName" class="form-control"
+												name="firstName" id="firstName" placeholder="First Name"
+												required>
+										</div>
+										<div class="col-sm-6">
+											<input type="text" ng-model="lastName" class="form-control"
+												name="lastName" id="lastName" placeholder="Last Name"
+												required>
+										</div>
+										<div class="col-sm-6">
+											<input type="number" ng-model="phoneNo" class="form-control"
+												name="phoneNo" id="phoneNo" placeholder="PhoneNo"
+												pattern=".{10,10}"
+												title="Phone number should be 10 digits long" required>
+										</div>
+										<div class="col-sm-6">
+											<input type="email" ng-model="email" class="form-control"
+												name="email" id="email" placeholder="Email" required>
+										</div>
+										<div class="col-sm-6">
+											<input pattern=".{6,}"
+												title="Password length show be more than 6" type="password"
+												ng-model="password" class="form-control" name="password"
+												id="password" placeholder="Password" required>
+										</div>
+										<div class="col-sm-6">
+											<input pattern=".{6,}"
+												title="Password length show be more than 6" type="password"
+												ng-model="retypePassword" class="form-control"
+												name="retypePassword" id="retypePassword"
+												placeholder="Confirm Password" required>
+										</div>
+										<div class="col-sm-12">Address:</div>
 
-									<div class="col-sm-6">
-										<input type="text" ng-model="address" class="form-control"
-											name="address" id="address" placeholder="Address" required>
-									</div>
-									<div class="col-sm-6">
-										<input type="text" ng-model="city" class="form-control"
-											name="city" id="city" placeholder="City" required>
-									</div>
-									<div class="col-sm-6">
-										<input type="text" ng-model="state" class="form-control"
-											name="state" id="state" placeholder="State" required>
-									</div>
-									<div class="col-sm-6">
-										<input type="text" ng-model="zipCode" class="form-control"
-											name="zipCode" id="zipCode" placeholder="ZipCode" required>
-									</div>
-									<div class="col-sm-12">Payment:</div>
-									<div class="col-sm-12">
-										<input type="number" ng-model="creditCardNumber"
-											class="form-control" name="creditCardNumber"
-											id="creditCardNumber" placeholder="Credit Card Number"
-											required>
-									</div>
-									<br>
-									<div class="col-sm-12">
-										<input type="text" ng-model="nameOnCard" class="form-control"
-											name="nameOnCard" id="nameOnCard" placeholder="Name On Card"
-											required>
-									</div>
-									<br>
-									<div class="col-sm-6">
-										<input type="month" ng-model="expiry" class="form-control"
-											name="expiry" id="expiry" placeholder="expiry" required>
-									</div>
-									<div class="col-sm-6">
-										<input type="password" ng-model="securityCode"
-											class="form-control" name="securityCode" id="securityCode"
-											placeholder="securityCode" required>
-									</div>
-									<br>
-									<div class="col-sm-12">
-										<div class="g-recaptcha" ng-model="recaptcha"
-											data-sitekey="== 6LeLchITAAAAAGNwAug22U8I8mVJUt685gPPzxI0 =="></div>
+										<div class="col-sm-6">
+											<input type="text" ng-model="address" class="form-control"
+												name="address" id="address" placeholder="Address" required>
+										</div>
+										<div class="col-sm-6">
+											<input type="text" ng-model="city" class="form-control"
+												name="city" id="city" placeholder="City" required>
+										</div>
+										<div class="col-sm-6">
+											<input type="text" ng-model="state" class="form-control"
+												name="state" id="state" placeholder="State" required>
+										</div>
+										<div class="col-sm-6">
+											<input pattern=".{5,5}" title="Invalid Zip Code"
+												type="text" ng-model="zipCode" class="form-control"
+												name="zipCode" id="zipCode" placeholder="ZipCode" required>
+										</div>
+										<div class="col-sm-12">Payment:</div>
+										<div class="col-sm-12">
+											<input  type="number" ng-model="creditCardNumber"
+												class="form-control" name="creditCardNumber"
+												id="creditCardNumber" placeholder="Credit Card Number"
+												pattern=".{16,16}" title="Credit card number should be 16 digits long"  required>
+										</div>
 										<br>
-										<div class="form-group">
-											<div align="center">
-												<button ng-click="signUp()" class="btn btn-primary"
-													data-dismiss="modal">Sign Up</button>
-												&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp
-												<button type="submit" class="btn btn-danger btn-default"
-													data-dismiss="modal">
-													<span class="glyphicon glyphicon-remove"></span> Cancel
-												</button>
+										<div class="col-sm-12">
+											<input type="text" ng-model="nameOnCard" class="form-control"
+												name="nameOnCard" id="nameOnCard" placeholder="Name On Card"
+												required>
+										</div>
+										<br>
+										<div class="col-sm-6">
+											<input type="month" ng-model="expiry" class="form-control"
+												name="expiry" id="expiry" placeholder="expiry" required>
+										</div>
+										<div class="col-sm-6">
+											<input pattern=".{3,4}" title="Invalid security code"
+												type="password" ng-model="securityCode" class="form-control"
+												name="securityCode" id="securityCode"
+												placeholder="securityCode" required>
+										</div>
+										<br>
+										<div class="col-sm-12">
+											<div class="g-recaptcha" ng-model="recaptcha"
+												data-sitekey="== 6LeLchITAAAAAGNwAug22U8I8mVJUt685gPPzxI0 =="></div>
+											<br>
+											<div class="form-group">
+												<div align="center">
+													<button data-dismiss="{{close}}" type="submit"
+														ng-click="signUp()" class="btn btn-primary">Sign
+														Up</button>
+													&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp
+													<button type="submit" class="btn btn-danger btn-default"
+														data-dismiss="modal">
+														<span class="glyphicon glyphicon-remove"></span> Cancel
+													</button>
+												</div>
 											</div>
 										</div>
 									</div>
-								</div>
-							</form>
-						</div>
-						<script>
-							var firstAngularApp = angular
-									.module('firstAngularApp', [])
-									.controller(
-											"personController",
-											function($scope, $http, $location,
-													$window) {
-
-												$scope.signUp = function() {
-													console
-															.log("Inside angular function");
-													if ($scope.password == $scope.retypePassword) {
+								</form>
+							</div>
+							<script>
+								var firstAngularApp = angular
+										.module('firstAngularApp', [])
+										.controller(
+												"personController",
+												function($scope, $http,
+														$location, $window) {
+														$scope.close='';
+													$scope.signUp = function() {
 														console
-																.log("recaptcha"
-																		+ grecaptcha
-																				.getResponse());
-														$http(
-																{
-																	method : 'POST',
-																	url : '/sign_up',
-																	data : {
-																		"firstName" : $scope.firstName,
-																		"lastName" : $scope.lastName,
-																		"address" : $scope.address,
-																		"city" : $scope.city,
-																		"state" : $scope.state,
-																		"zipCode" : $scope.zipCode,
-																		"phoneNo" : $scope.phoneNo,
-																		"email" : $scope.email,
-																		"creditCardNumber" : $scope.creditCardNumber,
-																		"password" : $scope.password,
-																		"nameOnCard" : $scope.nameOnCard,
-																		"securityCode" : $scope.securityCode,
-																		"expiry" : $scope.expiry,
-																		"signUpAs" : $scope.radioValue,
-																		"g-recaptcha-response" : grecaptcha
-																				.getResponse()
-																	}
+																.log("Inside angular function");
+														if ($scope.password == $scope.retypePassword) {
+															console
+																	.log("recaptcha"
+																			+ grecaptcha
+																					.getResponse());
+															$http(
+																	{
+																		method : 'POST',
+																		url : '/sign_up',
+																		data : {
+																			"firstName" : $scope.firstName,
+																			"lastName" : $scope.lastName,
+																			"address" : $scope.address,
+																			"city" : $scope.city,
+																			"state" : $scope.state,
+																			"zipCode" : $scope.zipCode,
+																			"phoneNo" : $scope.phoneNo,
+																			"email" : $scope.email,
+																			"creditCardNumber" : $scope.creditCardNumber,
+																			"password" : $scope.password,
+																			"nameOnCard" : $scope.nameOnCard,
+																			"securityCode" : $scope.securityCode,
+																			"expiry" : $scope.expiry,
+																			"signUpAs" : $scope.radioValue,
+																			"g-recaptcha-response" : grecaptcha
+																					.getResponse()
+																		}
 
-																})
-																.success(
-																		function(
-																				response) {
-																			window
-																					.alert(JSON
-																							.stringify(response));
-																			if (response.signup == "Owner Success")
-																				window
-																						.alert("Signup successful! Login as owner to continue");
-																			else if (response.signup == "Renter Success")
-																				window
-																						.alert("Signup successful! Login as renter to continue");
-																			else if (response.signup == "User already exists")
-																				window
-																						.alert("Username already exists! Use another username to signup");
-																			else
-																				window.location = '/fail_signup';
+																	})
+																	.success(
+																			function(
+																					response) {
+																				//window.alert(JSON.stringify(response));
+																				if (response.signup == "Owner Success"){
+																					
+																					window.alert("Signup successful! Login as owner to continue");
+																					$scope.close='modal';
+																				}
+																					else if (response.signup == "Renter Success")
+																					{
+																						window.alert("Signup successful! Login as renter to continue");
+																						$scope.close='modal';
+																					}
+																					else if (response.signup == "User already exists"){
+																						
+																					
+																					window.alert("Username already exists! Use another username to signup");
+																					
+																					}
+																					else{
+																					window.alert('signup failed');
+																				}
+																					//window.location = '/fail_signup';
+																					
+																				
 
-																		})
-																.error(
-																		function(
-																				error) {
-																			window
-																					.alert("error");
-																		});
-													} else {
-														window
-																.alert("Password mismatch");
-													}
-												};
-												//--------------------------------------------------------------------------------------------------------
-												$scope.renter_login = function() {
-													$window.location = "/renterLogin";
-												};
-												//-------------------------------------------------------------------------------------------------------
-												$scope.owner_login = function() {
-													window.location = "/login";
-												};
-												//-------------------------------------------------------------------------------------------------------
-												$scope.admin_login = function() {
-													window.location = "/adminLogin";
-												};
-											});
-						</script>
+																			})
+																	.error(
+																			function(
+																					error) {
+																				window
+																						.alert("error");
+																			});
+														} else {
+															window
+																	.alert("Password mismatch");
+														}
+													};
+													//--------------------------------------------------------------------------------------------------------
+													$scope.renter_login = function() {
+														$window.location = "/renterLogin";
+													};
+													//-------------------------------------------------------------------------------------------------------
+													$scope.owner_login = function() {
+														window.location = "/login";
+													};
+													//-------------------------------------------------------------------------------------------------------
+													$scope.admin_login = function() {
+														window.location = "/adminLogin";
+													};
+												});
+							</script>
+						</div>
+						<div class="modal-footer"></div>
 					</div>
-					<div class="modal-footer"></div>
 				</div>
 			</div>
-		</div>
+		</form>
 	</div>
 
 	<div id="myCarousel" class="carousel slide" data-ride="carousel">
@@ -458,8 +477,8 @@ textarea {
 		<!-- Wrapper for slides -->
 		<div class="carousel-inner" role="listbox">
 			<div class="item active">
-				<img src="/images/parking_2.jpg" alt="New York" width="1200"
-					style="height: 600px; width: 900px">
+				<img src="/images/parking_2.jpg" alt="New York" width="1000" height="600"
+					>
 				<div class="carousel-caption">
 					<!-- <h3>New York</h3>
           <p>The atmosphere in New York is lorem ipsum.</p> -->
@@ -467,21 +486,20 @@ textarea {
 			</div>
 
 			<div class="item">
-				<img src="/images/parking_3.jpg" alt="Chicago" width="1200"
-					height="50%">
+				<img src="/images/parking_3.jpg" alt="Chicago" width="1000"
+					height="400">
 				<div class="carousel-caption">
-					<h3>Chicago</h3>
-					<p>Thank you, Chicago - A night we won't forget.</p>
+					<h3></h3>
+					<p></p>
 				</div>
 			</div>
 
 			<div class="item">
-				<img src="/images/la.jpg" alt="Los Angeles" width="1200"
+				<img src="/images/FamilyCar.jpg" alt="Los Angeles" width="1000"
 					height="50%">
 				<div class="carousel-caption">
-					<h3>LA</h3>
-					<p>Even though the traffic was a mess, we had the best time
-						playing at Venice Beach!</p>
+					<h3></h3>
+					<p></p>
 				</div>
 			</div>
 		</div>
@@ -498,24 +516,18 @@ textarea {
 	</div>
 
 	<!-- Container (The Band Section) -->
-	<div id="band" class="container text-center">
-		<h3>ABOUT</h3>
-		<p>
-			<em>We love music!</em>
-		</p>
-		<p>We have created a fictional band website. Lorem ipsum dolor sit
-			amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt
-			ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis
-			nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo
-			consequat. Duis aute irure dolor in reprehenderit in voluptate velit
-			esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat
-			cupidatat non proident, sunt in culpa qui officia deserunt mollit
-			anim id est laborum consectetur adipiscing elit, sed do eiusmod
-			tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim
-			veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex
-			ea commodo consequat.</p>
+	<div id="band" class="container text-center" >
+		<h3>ABOUT INSTAPARK</h3>
+		<p></p>
+		<p>We have created a service which allows people to rent out their
+			unused personal parking spaces or residential parking garages to
+			people wanting to park their vehicles. This is of great help in
+			popular destinations where finding parking very difficult. Our
+			service aims at solving the ubiquitous problem of shortage of parking
+			spaces. It will not only reduce vehicle circling but will also
+			maximize parking utilization.</p>
 		<br>
-		<div class="row">
+	<!-- 	<div class="row">
 			<div class="col-sm-4">
 				<p class="text-center">
 					<strong>Name</strong>
@@ -559,48 +571,47 @@ textarea {
 				</div>
 			</div>
 		</div>
-	</div>
+	</div> -->
 
 	<!-- Container (TOUR Section) -->
 	<div id="tour" class="bg-1">
-		<div class="container">
-			 <h3 class="text-center">How It Works</h3>
-			
-			
+		<div  >
+			<h3 class="text-center">How It Works</h3>
 
-			<div class="row text-center">
-				<div class="col-sm-4">
-				<label> Find Your Parking Spot</label>
-					<div class="thumbnail">
-					
-						<img src="/images/findparking.jpg" alt="Paris" width="400" height="300">
-						
+				<div class="row text-center">
+					<div class="col-sm-4" >
+						<label> Find Your Parking Spot</label>
+						<div class="thumbnail" >
+
+							<img src="/images/findparking.jpg" alt="Paris" width="400"
+								height="200">
+
+						</div>
 					</div>
-				</div>
-				<div class="col-sm-4">
-				<label> Book Your Space</label>
-					<div class="thumbnail">
-						<img src="/images/AutosSmartParking_Gast.jpg" alt="New York" width="400"
-							height="300">
-						
+					<div class="col-sm-4">
+						<label> Book Your Space</label>
+						<div class="thumbnail">
+							<img src="/images/AutosSmartParking_Gast.jpg" alt="New York"
+								width="400" height="300">
+
+						</div>
 					</div>
-				</div>
-				<div class="col-sm-4">
-				<label> Park Your Car</label>
-					<div class="thumbnail">
-						<img src="/images/parkingdone.jpg" alt="San Francisco" width="400"
-							height="300">
-						
+					<div class="col-sm-4" style="height:100px;">
+						<label> Park Your Car</label>
+						<div class="thumbnail" >
+							<img src="/images/parkingdone.jpg" alt="San Francisco"
+								width="400" height="300">
+
+						</div>
 					</div>
 				</div>
 			</div>
-		</div>
-
-		<!-- Modal -->
+</div>
+	<!-- 
 		<div class="modal fade" id="myModal" role="dialog">
 			<div class="modal-dialog">
 
-				<!-- Modal content-->
+				Modal content
 				<div class="modal-content">
 					<div class="modal-header">
 						<button type="button" class="close" data-dismiss="modal">&times;</button>
@@ -640,9 +651,9 @@ textarea {
 			</div>
 		</div>
 	</div>
-
+ -->
 	<!-- Container (Contact Section) -->
-	<div id="contact" class="container">
+	<!-- <div id="contact" class="container">
 		<h3 class="text-center">Contact</h3>
 		<p class="text-center">
 			<em>We love our fans!</em>
@@ -709,9 +720,9 @@ textarea {
 					other things.</p>
 			</div>
 		</div>
-	</div>
+	</div> -->
 
-	<div id="googleMap"></div>
+	<!--  <div id="googleMap"></div>-->
 
 	<!-- Add Google Maps -->
 	<script src="http://maps.googleapis.com/maps/api/js"></script>

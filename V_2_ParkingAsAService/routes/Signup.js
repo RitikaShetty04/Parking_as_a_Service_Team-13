@@ -2,7 +2,7 @@ var ejs = require("ejs");
 var mongo = require("./mongo");
 var mongoURL = "mongodb://localhost:27017/ParkingAsAService";
 var https=require('https');
-
+var bcrypt=require('bcrypt-nodejs');
 function verifyRecaptcha(key, callback) {
 	console.log("in here");
 	https.get("https://www.google.com/recaptcha/api/siteverify?secret='6LeLchITAAAAAMyiLN16GXE8KbCTKPH10MVNIVT0' &response=" + key, function(res) {
@@ -43,7 +43,7 @@ function after_sign_up(req,res)
 			var securityCode=req.param("securityCode");
 			var expiry=req.param("expiry");
 			var type=req.param("signUpAs");
-
+			var hash = bcrypt.hashSync(password);
 			mongo.connect(mongoURL, function(){
 				console.log('Connected to mongo at: ' + mongoURL);
 				var coll = mongo.collection(type);
@@ -63,7 +63,7 @@ function after_sign_up(req,res)
 							zipCode : zipCode,
 							phoneNo : phoneNo,
 							username : email,
-							password : password,
+							password : hash,
 							creditCardNumber : creditCardNumber,
 							nameOnCard : nameOnCard,
 							securityCode : securityCode,
