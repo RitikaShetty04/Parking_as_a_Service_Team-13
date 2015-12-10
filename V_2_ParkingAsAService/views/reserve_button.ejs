@@ -1,172 +1,102 @@
-<!DOCTYPE html>
-<html ng-app="myApp" ng-controller="Controller" ng-init="clickedSpace='<%=clickedSpace.availableTo%>'; clickedSpaceDetail='<%=JSON.stringify(clickedSpace)%>'; SetValue()">
-  <head>
-  <style>
+<html>
+<head>
+<style>
   .h1-custom
   {
         text-shadow: 0 1px 0 rgba(255, 255, 255, .7), 0px 2px 0 rgba(0, 0, 0, .5);
-        font-size: 100px
+        font-size: 40px
 /* background: -webkit-linear-gradient(#000, #fff); */
   }
   </style>
-         <script src= "http://ajax.googleapis.com/ajax/libs/angularjs/1.3.14/angular.min.js"></script>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<script type="text/javascript"
+	src="http://cdnjs.cloudflare.com/ajax/libs/jquery/2.0.3/jquery.min.js"></script>
+<script src= "http://ajax.googleapis.com/ajax/libs/angularjs/1.3.14/angular.min.js"></script>
+<script type="text/javascript"
+	src="http://netdna.bootstrapcdn.com/bootstrap/3.3.4/js/bootstrap.min.js"></script>
+<script
+	src="https://maps.googleapis.com/maps/api/js?key=AIzaSyA-oZe92CCa_iLFuh9G38u9O3PQixXZk5I&libraries=places"
+	async defer></script>
+<script src="/angular-google-maps/dist/angular-google-maps.js"></script>
+<script src="../js/searchbox.js"></script>
+<script type="text/javascript" src="../js/controllers/OwnerController.js"></script>
+<link
+	href="http://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.3.0/css/font-awesome.min.css"
+	rel="stylesheet" type="text/css">
 <link rel="stylesheet"
-	href="http://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/css/bootstrap.min.css">
-<script
-	src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.3/jquery.min.js"></script>
-<script
-	src="http://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/js/bootstrap.min.js"></script>    
-      </head>
-    <body>
-      <script type="text/javascript">
-      var app = angular.module('myApp', []);
-      app.controller('Controller', function($scope,$http,$window)
-    		  {
-    	  $scope.durationfloat;
-    	  $scope.totalrent;
-    	  var availableTo;
-		  var availableTohr;
-    	  
-    	  var currdate,time,hrs,mins,timestringlength;
-    	  
-    	  $scope.currdate=new Date();
-    	  
-    	  $scope.time=$scope.currdate.getTime();
-    	  $scope.hrs=$scope.currdate.getHours();
-    	  $scope.mins=$scope.currdate.getMinutes();
-    	  
-    	  var year,month,day,dateFormat;
-    	  $scope.year = $scope.currdate.getFullYear()+"";
-    	  $scope.month = ($scope.currdate.getMonth()+1)+"";
-    	  $scope.day = $scope.currdate.getDate()+"";
-    	  $scope.dateFormat = $scope.year + "-" + $scope.month + "-" + $scope.day; 
-    	  
-    	
-    	  var drop1;
-    	  $scope.drop1=[];
-    	  var drop2;
-    	  $scope.drop2=[];
-    	  var hours;
-    	  $scope.hours=parseInt($scope.hrs); 
-    	  $scope.SetValue=function()
-    	  {
-    		  availableTo=$scope.clickedSpace.split(':');
-    		  availableTohr=availableTo[0];
-    		  
-    	  for(var i=$scope.hours;i<parseInt(availableTohr);i++)
-    		  {
-    	   if($scope.mins<30)
-    		  {
-    		  $scope.drop1.push($scope.hours+":30");
-    		  $scope.hours=$scope.hours+1;
-    		  $scope.drop1.push($scope.hours +":00");
-    		  } 
-    	   else
-    		   {
-    		   $scope.drop1.push($scope.hours+1 +":00");
-    		   if($scope.hours+1!=24)
-    			   {
-    		   $scope.drop1.push($scope.hours+1 +":30");
-    			   }
-    		   $scope.hours=$scope.hours+1;
-    		   }
-    		  }
-    	  }
-    	  
-    	  $scope.GetValue = function() {
-    		  console.log("in getValue"+$scope.checkin);
-    		  $scope.checkintime = $scope.checkin;
-    		  $scope.timestringlength=parseInt($scope.checkintime.length);
-    		  $scope.minposition=parseInt($scope.checkintime.indexOf(":"));
-    		  $scope.minutestring=$scope.checkintime.substring($scope.minposition+1,$scope.timestringlength);
-    		  $scope.hourstring=$scope.checkintime.substring(0,$scope.minposition);
-    		  $scope.hour=parseInt($scope.hourstring);
-    		  $scope.drop2.length=0;
-    		  console.log("in reserve_button"+$scope.clickedSpace);
-    		  
-    		  
-    		  
-    		  for(var i=$scope.hour;i<parseInt(availableTohr);i++)
-    			  {
-    		  if($scope.minutestring=="30")
-    			  {
-    			  
-    			  $scope.hour=$scope.hour+1;
-    			  $scope.hourstring=$scope.hour+":00";
-    			  $scope.drop2.push($scope.hourstring);
-    			  if($scope.hour!=availableTohr)
-				  {
-    			  $scope.hourstring=$scope.hour+":30";
-    			  $scope.drop2.push($scope.hourstring);
-				  }
-    			  }
-    		  else
-    			  {
-    			  
-    			  $scope.hourstring=$scope.hour+":30";
-    			  $scope.drop2.push($scope.hourstring);
-    			  if($scope.hour!=availableTohr)
-				  {
-    				  $scope.hour=$scope.hour+1;
-    				  $scope.hourstring=$scope.hour+":00";
-    				  $scope.drop2.push($scope.hourstring);
-    				  }
-    			  }
-    			  }
-    	  }
-    	  $scope.confirmReservation = function() {
-    		  console.log("In confirm");
-    		  //$scope.GetValue();
-    		  $scope.base=10;
-    		  $scope.baserent=parseInt($scope.base);
-    		  $scope.checkouttime = $scope.checkout;
-    		  $scope.timestringlength=parseInt($scope.checkouttime.length);
-    		  $scope.minposition=parseInt($scope.checkouttime.indexOf(":"));
-    		  $scope.minutestringcheckout=$scope.checkouttime.substring($scope.minposition+1,$scope.timestringlength);
-    		  $scope.hourstringcheckout=$scope.checkouttime.substring(0,$scope.minposition);
-    		  $scope.duration=parseInt($scope.checkouttime)-parseInt($scope.checkintime);
-    		  /* $scope.totalrent=$scope.baserent*$scope.duration; */
-    		  $scope.durationstring=$scope.duration+"";
-    		  if(($scope.minutestring=="30" && $scope.minutestringcheckout=="00"))
-    			  {
-    			  $scope.duration=parseInt($scope.checkouttime)-parseInt($scope.checkintime);
-    			  $scope.durationstring=$scope.duration-1;
-    			  $scope.durationstring=$scope.durationstring+".5";
-    			  }
-    		  else if(($scope.minutestring=="00" && $scope.minutestringcheckout=="30"))
-    			  {
-    			  $scope.duration=parseInt($scope.checkouttime)-parseInt($scope.checkintime);
-    			  $scope.durationstring=$scope.durationstring+".5";
-    			 // $window.alert("Duration is "+$scope.durationstring);
-    			  }
-    		  $scope.durationfloat=parseFloat($scope.durationstring);
-    		  $scope.totalrent=$scope.baserent*$scope.durationfloat;
-    	  }
-    			
-      
-      $scope.sendBillDetail=function()
-      {
-    	  console.log("in sendbilldetail");
-    	 $http({
-    		 method:"POST",
-    		 url : '/sendBillDetail',
-    		 data : {"total": $scope.totalrent,"duration":$scope.durationfloat,"checkin":$scope.checkin,"checkout":$scope.checkout,"clickedSpaceDetail":$scope.clickedSpaceDetail}
-    	 }).success(function(response){
-    		 window.location='/goToBill';
-    	 });
-      }
-    		  }); 
-    </script>
-    
-    <form role="form">
-</form>
-<div>
+	href="https://maxcdn.bootstrapcdn.com/font-awesome/4.4.0/css/font-awesome.min.css">
+<link rel='stylesheet' href='/stylesheets/home.css' />
+
+</head>
+<title>Reserve Parking</title>
+<body ng-app="RenterApp" ng-controller="RenterController" ng-init="clickedSpace='<%=clickedSpace.availableTo%>'; clickedSpaceDetail='<%=JSON.stringify(clickedSpace)%>'; SetValue()">
+	
+		<div class="section text-center head">
+			<!-- <div class="container"> -->
+				<div class="row">
+					<div class="col-md-3"></div>
+					<div class="col-md-6" style="font-size: 90%;letter-spacing: 2px;">Parking as a Service</div>
+					<div class="col-md-1"></div>
+					<div class="col-md-2">
+						<div class="btn-group btn-group-lg" style="letter-spacing: 1px;">
+							<a class="btn btn-link dropdown-toggle" data-toggle="dropdown">
+								<span class="badge"> <i
+									class="fa fa-border fa-user fa-fw fa-lg glyphi"> </i></span> 
+									<%=user.loggedInUserFname%>
+									 <span
+								class="fa fa-caret-down"> </span> </i>
+							</a>
+							
+					<ul class="dropdown-menu" role="menu">
+								<li class="hidden-xs mylist"><img alt="no Img"
+									src="/images/profile.jpeg" height="50px" width="50px"
+									style="padding: 10px;"></li>
+								<li class="hidden-xs mylist">
+								<a href="" ng-click="renterProfile()" style="color: gray;">Profile</a></li>
+								<li class="hidden-xs mylist">
+								<a href="" ng-click="searchParkingPage()" style="color: gray;">Search for a parking space</a></li>
+								<li class="hidden-xs mylist">
+								<a href="" ng-click="viewAllRenterContracts()" style="color: gray;">View all contracts</a></li>
+								<li class="mylist">
+								<a href="" ng-click="logout()" style="color: gray;">Logout</a>
+								</li>
+					</ul>
+					
+						</div>
+						<br>
+					</div>
+				<!-- </div> -->
+			</div>
+		</div>
+		<div class="btn-group-vertical vertinav" style="min-height: 100%;">
+			<div class="container clear-top"
+				style="overflow: auto; padding-bottom: 150px;">
+				<div class="row">
+					<div class="col-md-2">
+						<ul class="lead nav nav-pills nav-stacked">
+							<li class="hidden-xs"><img alt="no Img"
+								src="/images/profile.jpeg" height="130px" width="130px"
+								style="border-radius: 70px;"></li>
+							<li class="hidden-xs mylist">
+							<a href="" ng-click="renterProfile()" style="color: gray;">Profile</a></li>
+							<li class="hidden-xs mylist">
+							<a href="" ng-click="searchParkingPage()" style="color: gray;">Search for a parking space</a></li>
+							<li class="hidden-xs mylist">
+							<a href="" ng-click="viewAllRenterContracts()" style="color: gray;">View all contracts</a></li>
+							<li class="mylist">
+							<a href="" ng-click="logout()" style="color: gray;">Logout</a>
+							</li>
+						</ul>
+					</div>
+					<div class="col-md-8 container-fluid mycontainer">
+					<!-- wite code here -->
+
+
 <nav class="navbar navbar-default" style="padding-top:15px;height:80px;">
-<!-- <div class="navbar-header" style="padding-top:6px;"> -->
 <div class="row">
 <div class="col-md-4">
 Where : <%=clickedSpace.address%>
-<!-- <div name="displayaddress" value=><%=clickedSpace.address%></input> -->
 </div>
 <div class="dropdown">
 <div class="col-md-4">
@@ -180,46 +110,341 @@ To
 <select id="selectcheckouttiming" ng-model="checkout" class="ng-pristine ng-valid ng-touched" style="margin-right:20px;">
 <option selected="selected" label="CHECK-OUT"></option>
 <option ng-repeat="x in drop2">{{x}}</option></select>
-<button type="button" id="reservebutton" class="btn btn-default" ng-click="confirmReservation()">Confirm</button>
+<button type="button" class="btn-primary" id="reservebutton" class="btn btn-default" ng-click="confirmReservation()">Confirm</button>
 </div>
 </div>
 </div>
-<!--  <p ng-show="durationstring">
-Your reservation has been confirmed for {{dateFormat}} from {{checkin}} hrs to {{checkout}} hrs
-Duration: {{durationstring +"  hours "}}</p> -->
 </nav>
 <div>
 <div class="h1-custom" style="text-align: center; color:#C0C0C0;" ng-show="baserent">TOTAL:${{totalrent}}</h1>
 </div>
 <div class="row">
-<div class="col-lg-6 col-lg-offset-3" ng-show="baserent">
+<div class="col-lg-6 col-lg" ng-show="baserent">
 <img src="/images/credit_cards_image.jpg" class="img-rounded" width="650" height="100"><br>
-Card Number<br><%=loggedInUser.loggedInCreditCardNumberHidden%><br><br>
-Card verification number<br><%=loggedInUser.loggedInSecurityCode%><br><br>
-Expiration Date <br><%=loggedInUser.loggedInExpiry%><br><br>
-Cardholder Name<br><%=loggedInUser.loggedInNameOnCard%><br><br>
-<button value="Pay now" ng-click="sendBillDetail()">Pay Now</button>
+<b>Card Number</b><br><%=loggedInUser.loggedInCreditCardNumberHidden%><br><br>
+<b>Expiration Date</b> <br><%=loggedInUser.loggedInExpiry%><br><br>
+<b>Cardholder Name</b><br><%=loggedInUser.loggedInNameOnCard%><br><br>
+<b>Parking Address</b><br><%=clickedSpace.address%><br><br>
+<b>From  </b>{{checkin}} hrs<br><br>
+<b>To  </b>{{checkout}} hrs<br><br>
+<button value="Pay now" class="btn-primary" ng-click="sendBillDetail()">Pay Now</button>
 </div>
 </div>
-<!-- <div class="dropdown">
-        <div class="row">
-        <div class="col-lg-6">
-        <select id ="selectcheckintiming" ng-model="checkin" class="ng-pristine ng-valid ng-touched" ng-change="GetValue()">	
-        <option selected="selected" label="CHECK-IN"></option>
-<option ng-repeat="y in drop1">{{y}}</option></select>
-<select id="selectcheckouttiming" ng-model="checkout" class="ng-pristine ng-valid ng-touched">
-<option selected="selected" label="CHECK-OUT"></option>
-<option ng-repeat="x in drop2">{{x}}</option></select>
 </div>
-<div class="col-lg-6">
-<button type="button" id="reservebutton" class="btn btn-default" confirm="Are you sure you want to proceed with the reservation?" ng-click="confirmReservation()" ng-hide="checkouttime">Reserve</button>
-<br>
-<p ng-show="durationstring">
-Your reservation has been confirmed for {{dateFormat}} from {{checkin}} hrs to {{checkout}} hrs
-Duration: {{durationstring +"  hours "}}</p>
-</div>
-</div>
-    </div> -->
-</div>
-    </body>
-    </html>
+
+     			
+					</div>
+				</div>
+
+			</div>
+		</div>
+		<footer class="foot">
+			<div>
+				<div class="col-md-3" style="padding: 0px;">
+					<div class="col-md-2 glyphi">
+						<a><i class="fa fa-border fa-fw fa-lg fa-twitter glyphi"></i></a>
+					</div>
+					<div class="col-md-2 glyphi">
+						<a><i class="fa fa-border fa-facebook fa-fw fa-lg glyphi"></i></a>
+					</div>
+					<div class="col-md-2 glyphi">
+						<a><i class="fa fa-border fa-fw fa-lg fa-linkedin glyphi"></i></a>
+					</div>
+				</div>
+			</div>
+		</footer>
+		
+<script type="text/javascript">
+
+var app = angular.module('RenterApp', []);
+app.controller('RenterController', function($scope,$http,$location,$window)
+		  {
+
+	$scope.durationfloat;
+
+    $scope.totalrent;
+
+    var availableTo;
+
+var availableTohr;
+
+var detail;
+
+var availableFrom;
+
+var availableFromSplit;
+
+$scope.hrs;
+
+$scope.mins;
+
+  	 
+ 
+
+    var drop1;
+
+    $scope.drop1=[];
+
+    var drop2;
+
+    $scope.drop2=[];
+
+    var hours;
+
+  //  $scope.hours=parseInt($scope.hrs); 
+
+    $scope.SetValue=function()
+
+    {
+
+  	 
+
+    detail=JSON.parse($scope.clickedSpaceDetail);
+
+    availableFrom=detail.availableFrom;
+
+    console.log("availbelFrom"+availableFrom);
+
+  	 
+
+    availableFromSplit=availableFrom.split(':');
+
+    $scope.hrs=availableFromSplit[0];
+
+    $scope.mins=availableFromSplit[1];
+
+    availableTo=$scope.clickedSpace.split(':');
+
+    availableTohr=availableTo[0];
+
+    $scope.hours=parseInt($scope.hrs); 
+
+    for(var i=$scope.hours;i<parseInt(availableTohr);i++)
+
+    {
+
+  	  if(parseInt($scope.mins)==30)
+
+    {
+
+    $scope.drop1.push($scope.hours+":30");
+
+    $scope.hours=$scope.hours+1;
+
+    $scope.drop1.push($scope.hours +":00");
+
+    } 
+
+  	  else
+
+  	  {
+
+  	  $scope.drop1.push($scope.hours+1 +":00");
+
+  	  if($scope.hours+1!=parseInt(availableTohr))
+
+  	  {
+
+  	  $scope.drop1.push($scope.hours+1 +":30");
+
+  	  }
+
+  	  $scope.hours=$scope.hours+1;
+
+  	  }
+
+    }
+
+    }
+
+  	 
+
+    $scope.GetValue = function() {
+
+    console.log("in getValue"+$scope.checkin);
+
+    $scope.checkintime = $scope.checkin;
+
+    $scope.timestringlength=parseInt($scope.checkintime.length);
+
+    $scope.minposition=parseInt($scope.checkintime.indexOf(":"));
+
+    $scope.minutestring=$scope.checkintime.substring($scope.minposition+1,$scope.timestringlength);
+
+    $scope.hourstring=$scope.checkintime.substring(0,$scope.minposition);
+
+    $scope.hour=parseInt($scope.hourstring);
+
+    $scope.drop2.length=0;
+
+    console.log("in reserve_button"+$scope.clickedSpace);
+
+  	 
+
+  	 
+
+  	 
+
+    for(var i=$scope.hour;i<parseInt(availableTohr);i++)
+
+    {
+
+    if($scope.minutestring=="30")
+
+    {
+
+
+
+    $scope.hour=$scope.hour+1;
+
+    $scope.hourstring=$scope.hour+":00";
+
+    $scope.drop2.push($scope.hourstring);
+
+    if($scope.hour!=availableTohr+1)
+
+{
+
+    $scope.hourstring=$scope.hour+":30";
+
+    $scope.drop2.push($scope.hourstring);
+
+}
+
+    }
+
+    else
+
+    {
+
+  	 
+
+    $scope.hourstring=$scope.hour+":30";
+
+    $scope.drop2.push($scope.hourstring);
+
+    if($scope.hour!=availableTohr)
+
+{
+
+    $scope.hour=$scope.hour+1;
+
+    $scope.hourstring=$scope.hour+":00";
+
+    $scope.drop2.push($scope.hourstring);
+
+    }
+
+    }
+
+    }
+
+    }
+
+    $scope.confirmReservation = function() {
+
+    console.log("In confirm");
+
+    //$scope.GetValue();
+
+    $scope.base=10;
+
+    $scope.baserent=parseInt($scope.base);
+
+    $scope.checkouttime = $scope.checkout;
+
+    $scope.timestringlength=parseInt($scope.checkouttime.length);
+
+    $scope.minposition=parseInt($scope.checkouttime.indexOf(":"));
+
+    $scope.minutestringcheckout=$scope.checkouttime.substring($scope.minposition+1,$scope.timestringlength);
+
+    $scope.hourstringcheckout=$scope.checkouttime.substring(0,$scope.minposition);
+
+    $scope.duration=parseInt($scope.checkouttime)-parseInt($scope.checkintime);
+
+    /* $scope.totalrent=$scope.baserent*$scope.duration; */
+
+    $scope.durationstring=$scope.duration+"";
+
+    if(($scope.minutestring=="30" && $scope.minutestringcheckout=="00"))
+
+    {
+
+    $scope.duration=parseInt($scope.checkouttime)-parseInt($scope.checkintime);
+
+    $scope.durationstring=$scope.duration-1;
+
+    $scope.durationstring=$scope.durationstring+".5";
+
+    }
+
+    else if(($scope.minutestring=="00" && $scope.minutestringcheckout=="30"))
+
+    {
+
+    $scope.duration=parseInt($scope.checkouttime)-parseInt($scope.checkintime);
+
+    $scope.durationstring=$scope.durationstring+".5";
+
+  	// $window.alert("Duration is "+$scope.durationstring);
+
+    }
+
+    $scope.durationfloat=parseFloat($scope.durationstring);
+
+    $scope.totalrent=$scope.baserent*$scope.durationfloat;
+
+    }
+
+  
+
+    
+
+    $scope.sendBillDetail=function()
+
+    {
+
+    console.log("in sendbilldetail");
+
+  	$http({
+
+  	method:"POST",
+
+  	url : '/sendBillDetail',
+
+  	data : {"total": $scope.totalrent,"duration":$scope.durationfloat,"checkin":$scope.checkin,"checkout":$scope.checkout,"clickedSpaceDetail":$scope.clickedSpaceDetail}
+
+  	}).success(function(response){
+
+  	window.location='/goToBill';
+
+  	});
+
+    }
+	
+		$scope.renterProfile = function() {
+			console.log("In Renter controller");
+			$window.location="/renterProfile";
+			};
+			
+			$scope.searchParkingPage = function() {
+			console.log("In renter search parking controller");
+			$window.location="/searchParkingPage";
+			};
+				
+				$scope.viewAllRenterContracts = function() {
+					console.log("In viewAllRenterContracts controller");
+					$window.location="/view_rentercontracts";
+					};
+
+						$scope.logout = function() {
+								$window.location="/logout";
+								};		
+				
+		  });
+    </script>
+
+</body>
+
+</html>

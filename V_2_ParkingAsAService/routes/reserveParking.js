@@ -23,6 +23,7 @@ exports.sendBillDetail=function(req,res)
 	mongo.connect(mongoURL, function(){
 		console.log('Connected to mongo at: ' + mongoURL);
 		var coll = mongo.collection('parkingContract');
+		var coll1=mongo.collection('parkingSpace');
 
 		coll.insert({date : date,
 			billingId : '10',
@@ -40,7 +41,28 @@ exports.sendBillDetail=function(req,res)
 		{
 			if(response)
 			{
-				res.send({"response":"Success"});
+				coll1.update({owner_username : clickedSpaceDetail.owner_username, address : clickedSpaceDetail.address},{$set : {availableFrom : checkout}},
+
+						function(err,response){
+
+						if(err)
+
+						{
+
+
+
+						}
+
+						else
+
+						{
+
+						res.send({"response":"Success"});
+
+						}
+
+						});
+				
 			}
 		});
 	});

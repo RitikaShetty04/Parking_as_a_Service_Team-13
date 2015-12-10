@@ -47,7 +47,7 @@ function after_renter_login(req,res) {
 				req.session.loggedInPhone = user.phoneNo;
 //Card details
 				req.session.loggedInCreditCardNumber = user.creditCardNumber;
-				req.session.loggedInCreditCardNumberHidden="************"+user.creditCardNumber.substring(12);
+				req.session.loggedInCreditCardNumberHidden="****"+" "+"****"+" "+"****" +" "+user.creditCardNumber.toString().substring(12);
 				console.log("loggedincreditcardhidden"+req.session.loggedInCreditCardNumberHidden);
 				req.session.loggedInNameOnCard = user.nameOnCard;
 				req.session.loggedInExpiry = user.expiry;

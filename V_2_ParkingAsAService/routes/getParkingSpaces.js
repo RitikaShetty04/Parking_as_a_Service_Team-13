@@ -120,5 +120,5 @@ exports.goToReserve=function(req,res)
 exports.goToReserveConfirm=function(req,res)
 {
 	console.log("clickedSpace");
-	res.render("reserve_button",{"clickedSpace":clickedSpace,"loggedInUser":req.session});
+	res.render("reserve_button",{"clickedSpace":clickedSpace,"loggedInUser":req.session,"user":req.session});
 };
